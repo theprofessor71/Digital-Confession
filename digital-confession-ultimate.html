@@ -1,0 +1,1509 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#0D0D0D">
+<meta name="description" content="Digital Confession — নামহীনভাবে মনের কথা বলো">
+<title>Digital Confession — আত্মার কথা</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Noto+Serif+Bengali:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ╔══════════════════════════════════════╗
+   ║  DIGITAL CONFESSION — CSS MASTER     ║
+   ╚══════════════════════════════════════╝ */
+:root {
+  --bg:#0D0D0D; --bg2:#110d0b; --bg3:#160e0a;
+  --gold:#C9A84C; --gold2:#e8c97e; --gold3:#8a6820; --gold-dim:rgba(201,168,76,.15);
+  --crimson:#8B0000; --crim2:#c0392b; --crim3:rgba(139,0,0,.12);
+  --purple:#2D1B69; --purp2:#7c5cbf;
+  --ember:#C4622D; --ember2:#e07840;
+  --lapis:#1B2A4A; --sand:#8B7355; --ash:#F5F0E8;
+  --muted:rgba(139,115,85,.55);
+  --card:linear-gradient(145deg,rgba(22,14,10,.97),rgba(14,10,8,.99));
+  --border:rgba(201,168,76,.14);
+  --border-h:rgba(201,168,76,.35);
+  --r3:3px; --r4:4px; --r50:50px;
+  --trans:.35s cubic-bezier(.4,0,.2,1);
+  --fcinzel:'Cinzel',serif;
+  --fcormo:'Cormorant Garamond',serif;
+  --fbn:'Noto Serif Bengali','Cormorant Garamond',serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--ash);font-family:var(--fbn);overflow-x:hidden;cursor:none;-webkit-font-smoothing:antialiased}
+::selection{background:var(--gold-dim);color:var(--gold)}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--gold3);border-radius:2px}
+
+/* ══ CURSOR ══ */
+#cur{width:7px;height:7px;background:var(--gold);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;box-shadow:0 0 10px var(--gold),0 0 22px var(--ember);transition:width .18s,height .18s,opacity .18s}
+#cur-ring{width:30px;height:30px;border:1px solid rgba(201,168,76,.3);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transition:all .13s ease}
+.spark{position:fixed;width:3px;height:3px;border-radius:50%;pointer-events:none;z-index:9997;animation:sparkOut .55s ease forwards}
+@keyframes sparkOut{to{opacity:0;transform:translate(var(--sx),var(--sy)) scale(0)}}
+
+/* ══ OVERLAY LAYERS ══ */
+#spotlight{position:fixed;inset:0;pointer-events:none;z-index:5;background:radial-gradient(circle 220px at var(--mx,50%) var(--my,50%),transparent 0%,rgba(0,0,0,.72) 100%)}
+#noise{position:fixed;inset:0;pointer-events:none;z-index:998;opacity:.28;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E")}
+#vignette{position:fixed;inset:0;pointer-events:none;z-index:4;background:radial-gradient(ellipse 85% 85% at 50% 50%,transparent 38%,rgba(0,0,0,.75) 100%)}
+#fog{position:fixed;bottom:0;left:0;right:0;height:260px;pointer-events:none;z-index:6;background:linear-gradient(to top,rgba(18,10,5,.55),transparent);animation:fogBreath 9s ease-in-out infinite alternate}
+@keyframes fogBreath{from{height:220px;opacity:.55}to{height:340px;opacity:.85}}
+
+/* ══ LOADER ══ */
+#loader{position:fixed;inset:0;background:#080504;z-index:10000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.8rem;transition:opacity .9s}
+#loader.fade{opacity:0;pointer-events:none}
+.lc-wrap{display:flex;flex-direction:column;align-items:center;gap:0}
+.lc-flame{width:18px;height:40px;background:radial-gradient(ellipse at 50% 72%,#fff 0%,#ffb84a 32%,#e0720c 68%,transparent 100%);border-radius:50% 50% 28% 28%/65% 65% 35% 35%;opacity:0;box-shadow:0 0 22px #ffb84a,0 0 55px rgba(255,140,40,.45);animation:flameMain 2s ease-in-out infinite;transition:opacity 1.1s}
+.lc-flame.lit{opacity:1}
+.lc-wick{width:2px;height:10px;background:#bbb;margin-bottom:-1px}
+.lc-body{width:22px;height:90px;background:linear-gradient(to right,#c8ba96,#ede5cc,#bfb086);border-radius:2px 2px 5px 5px}
+.lc-pool{width:30px;height:6px;background:rgba(201,168,76,.15);border-radius:50%;margin-top:2px}
+#ld-title{font-family:var(--fcinzel);font-size:1.1rem;letter-spacing:.5em;color:var(--gold);opacity:0;transition:opacity 1s;text-transform:uppercase}
+#ld-tw{font-family:var(--fbn);font-size:1.05rem;color:var(--ash);opacity:.65;min-height:1.6em;text-align:center;max-width:320px}
+#ld-bar{width:220px;height:1px;background:rgba(201,168,76,.18);border-radius:1px;overflow:hidden;margin-top:.3rem}
+#ld-fill{height:100%;width:0;background:linear-gradient(to right,var(--gold3),var(--gold));transition:width 3.2s cubic-bezier(.4,0,.2,1)}
+
+/* ══ DOOR ══ */
+#door{position:fixed;inset:0;z-index:9000;display:flex;perspective:1200px;pointer-events:none}
+.dh{width:50%;height:100%;background:linear-gradient(160deg,#120b07,#1c1008);transition:transform 1.6s cubic-bezier(.76,0,.18,1);position:relative;overflow:hidden}
+.dh:first-child{transform-origin:left center;border-right:1px solid rgba(201,168,76,.22)}
+.dh:last-child{transform-origin:right center;border-left:1px solid rgba(201,168,76,.22)}
+.dh::before{content:'';position:absolute;inset:14px;border:1px solid rgba(201,168,76,.08);border-radius:2px}
+.dh::after{content:'';position:absolute;top:10%;bottom:10%;left:50%;width:1px;background:linear-gradient(to bottom,transparent,rgba(201,168,76,.12),transparent)}
+.dk{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:0}
+.dk-hole{width:10px;height:18px;background:rgba(201,168,76,.25);border-radius:5px 5px 0 0}
+.dk-circle{width:14px;height:14px;background:rgba(201,168,76,.2);border-radius:50%;margin-top:-1px}
+#door.open .dh:first-child{transform:rotateY(-100deg)}
+#door.open .dh:last-child{transform:rotateY(100deg)}
+.door-light{position:absolute;top:0;bottom:0;left:50%;width:3px;background:linear-gradient(to bottom,transparent,rgba(201,168,76,.5),transparent);opacity:0;transform:translateX(-50%);transition:opacity .4s}
+
+/* ══ NAV ══ */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:1.1rem 3.5rem;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(to bottom,rgba(8,5,3,.94),transparent);backdrop-filter:blur(10px);border-bottom:1px solid rgba(201,168,76,.07)}
+.nav-brand{font-family:var(--fcinzel);font-size:.95rem;color:var(--gold);letter-spacing:.22em;font-weight:600;display:flex;align-items:center;gap:.7rem;text-decoration:none}
+.nav-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;box-shadow:0 0 8px var(--gold);animation:navPulse 2.5s infinite}
+@keyframes navPulse{0%,100%{opacity:1;box-shadow:0 0 8px var(--gold)}50%{opacity:.4;box-shadow:0 0 20px var(--gold),0 0 35px var(--ember)}}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;transition:color var(--trans);font-family:var(--fcinzel)}
+.nav-links a:hover{color:var(--gold)}
+.nav-right{display:flex;align-items:center;gap:.8rem}
+.nav-btn{padding:.38rem 1rem;background:transparent;border:1px solid var(--border);color:var(--muted);font-family:var(--fcinzel);font-size:.62rem;letter-spacing:.18em;cursor:pointer;border-radius:var(--r50);transition:all var(--trans);text-transform:uppercase;white-space:nowrap}
+.nav-btn:hover,.nav-btn.on{border-color:var(--gold);color:var(--gold);background:var(--gold-dim)}
+#hamb{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:4px}
+#hamb span{width:22px;height:1px;background:var(--sand);transition:all .3s}
+.mob-menu{display:none;position:fixed;inset:0;z-index:490;background:rgba(8,5,3,.97);flex-direction:column;align-items:center;justify-content:center;gap:2.5rem}
+.mob-menu.open{display:flex}
+.mob-menu a{font-family:var(--fcinzel);font-size:1.2rem;letter-spacing:.3em;color:var(--sand);text-decoration:none;text-transform:uppercase;transition:color .3s}
+.mob-menu a:hover{color:var(--gold)}
+
+/* ══ HERO ══ */
+#hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:2rem}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 80% at 50% 85%,rgba(196,98,45,.1) 0%,transparent 65%),radial-gradient(ellipse 50% 55% at 15% 60%,rgba(139,0,0,.07) 0%,transparent 55%),linear-gradient(180deg,#050302 0%,#0a0605 45%,#130907 100%)}
+#stars-c,#rain-c{position:absolute;inset:0;pointer-events:none}
+.hero-cnt{position:relative;z-index:10;text-align:center;padding:2rem 1rem}
+.hero-over{font-family:var(--fcinzel);font-size:.7rem;letter-spacing:.6em;color:var(--gold);opacity:.65;margin-bottom:2.5rem;text-transform:uppercase;animation:fadeUp 1.2s ease both}
+.hero-h1{font-family:var(--fcinzel);font-size:clamp(3.8rem,9.5vw,8.5rem);font-weight:900;line-height:.86;letter-spacing:-.02em;background:linear-gradient(148deg,var(--gold2) 0%,var(--gold) 38%,#7a4e14 68%,var(--gold) 92%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 45px rgba(201,168,76,.22));animation:fadeUp 1.2s .2s ease both}
+.hero-bn{font-family:var(--fbn);font-size:clamp(1.1rem,2.8vw,1.7rem);font-weight:300;color:rgba(245,240,232,.55);letter-spacing:.12em;margin-top:.7rem;animation:fadeUp 1.2s .35s ease both}
+.hero-rule{width:90px;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent);margin:1.8rem auto;animation:fadeUp 1.2s .5s ease both}
+.hero-tag{font-family:var(--fcormo);font-style:italic;font-size:clamp(.95rem,2.1vw,1.35rem);color:var(--sand);max-width:500px;line-height:1.95;min-height:4em;animation:fadeUp 1.2s .65s ease both}
+.hero-ctas{display:flex;gap:1.2rem;justify-content:center;margin-top:2.8rem;flex-wrap:wrap;animation:fadeUp 1.2s .8s ease both}
+.btn-p{padding:.95rem 2.3rem;background:linear-gradient(135deg,rgba(201,168,76,.12),rgba(139,40,0,.09));border:1px solid var(--gold);color:var(--gold);font-family:var(--fcinzel);font-size:.78rem;letter-spacing:.38em;cursor:pointer;border-radius:var(--r3);transition:all .42s;text-decoration:none;text-transform:uppercase;position:relative;overflow:hidden}
+.btn-p::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(201,168,76,.2),rgba(201,168,76,.04));transform:scaleX(0);transform-origin:left;transition:transform .42s}
+.btn-p:hover::before{transform:scaleX(1)}
+.btn-p:hover{box-shadow:0 0 35px rgba(201,168,76,.18),0 0 70px rgba(201,168,76,.06);letter-spacing:.48em}
+.btn-g{padding:.95rem 2.3rem;background:transparent;border:1px solid rgba(245,240,232,.18);color:rgba(245,240,232,.55);font-family:var(--fcinzel);font-size:.78rem;letter-spacing:.38em;cursor:pointer;border-radius:var(--r3);transition:all .35s;text-decoration:none;text-transform:uppercase}
+.btn-g:hover{border-color:rgba(245,240,232,.38);color:var(--ash)}
+#candle-row{position:absolute;bottom:0;left:0;right:0;height:320px;display:flex;justify-content:space-around;align-items:flex-end;padding:0 6%;pointer-events:none;z-index:8}
+.cw{display:flex;flex-direction:column;align-items:center;position:relative}
+.cf{border-radius:50% 50% 28% 28%/65% 65% 35% 35%;animation:flameMain var(--fd,2s) var(--fd2,0s) ease-in-out infinite}
+@keyframes flameMain{0%,100%{transform:scaleX(1) rotate(-1deg)}28%{transform:scaleX(.8) scaleY(1.1) rotate(2.2deg)}58%{transform:scaleX(1.12) scaleY(.92) rotate(-1.8deg)}82%{transform:scaleX(.88) scaleY(1.07) rotate(2.8deg)}}
+.cb{border-radius:2px 2px 4px 4px;background:linear-gradient(to right,#c4b892,#ede5cc,#bdb082)}
+.ca{position:absolute;border-radius:50%;background:radial-gradient(ellipse,rgba(255,140,40,.1),transparent 70%);animation:glA var(--fd,2s) var(--fd2,0s) ease-in-out infinite}
+@keyframes glA{0%,100%{opacity:.75;transform:scale(1)}50%{opacity:.35;transform:scale(.82)}}
+.scroll-h{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:7px;color:var(--muted);font-size:.62rem;letter-spacing:.35em;text-transform:uppercase;z-index:10;animation:fadeUp 2s 1.8s ease both}
+.scroll-l{width:1px;height:46px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrlAnim 2.8s ease-in-out infinite}
+@keyframes scrlAnim{0%{transform:scaleY(0);transform-origin:top;opacity:1}50%{transform:scaleY(1);transform-origin:top;opacity:1}51%{transform:scaleY(1);transform-origin:bottom;opacity:1}100%{transform:scaleY(0);transform-origin:bottom;opacity:0}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+
+/* ══ WEATHER STRIP ══ */
+.weather-s{padding:1.8rem 4rem;display:flex;justify-content:center;gap:3.5rem;flex-wrap:wrap;border-bottom:1px solid rgba(201,168,76,.07);background:rgba(255,255,255,.008);position:relative;z-index:10}
+.wi{display:flex;align-items:center;gap:.75rem}
+.wicon{font-size:1.4rem}
+.winfo{display:flex;flex-direction:column}
+.wval{font-family:var(--fcinzel);font-size:1rem;color:var(--gold);font-weight:600;line-height:1.2}
+.wkey{font-family:var(--fcinzel);font-size:.58rem;letter-spacing:.25em;color:var(--sand);opacity:.45;text-transform:uppercase}
+.hb-dot{width:8px;height:8px;background:var(--crim2);border-radius:50%;animation:hbAnim 1.1s ease-in-out infinite}
+@keyframes hbAnim{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(192,57,43,.4)}50%{transform:scale(1.5);box-shadow:0 0 0 7px rgba(192,57,43,0)}}
+
+/* ══ STATS ══ */
+.stats-s{border-top:1px solid rgba(201,168,76,.07);border-bottom:1px solid rgba(201,168,76,.07);padding:3rem 4rem;display:flex;justify-content:center;gap:5rem;flex-wrap:wrap;background:rgba(255,255,255,.007);position:relative;z-index:10}
+.stat{text-align:center}
+.stat-n{font-family:var(--fcinzel);font-size:2.6rem;font-weight:900;background:linear-gradient(140deg,var(--gold2),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;line-height:1;margin-bottom:.25rem}
+.stat-l{font-family:var(--fcinzel);font-size:.58rem;letter-spacing:.4em;color:var(--sand);text-transform:uppercase;opacity:.45}
+
+/* ══ SECTIONS ══ */
+.sec{padding:7rem 2rem;position:relative;z-index:10}
+.sec-lb{font-family:var(--fcinzel);font-size:.66rem;letter-spacing:.55em;color:var(--gold);text-transform:uppercase;text-align:center;margin-bottom:.9rem;opacity:.72}
+.sec-h{font-family:var(--fcinzel);font-size:clamp(1.9rem,4.8vw,3.6rem);font-weight:600;text-align:center;color:var(--ash);line-height:1.12;margin-bottom:.7rem}
+.sec-d{font-family:var(--fcormo);font-style:italic;font-size:1.12rem;color:var(--sand);text-align:center;margin-bottom:3.8rem;line-height:1.85;max-width:580px;margin-left:auto;margin-right:auto}
+.orn{display:flex;align-items:center;gap:1.5rem;justify-content:center;margin:2.5rem 0}
+.orn::before,.orn::after{content:'';flex:1;height:1px;max-width:110px;background:linear-gradient(to right,transparent,rgba(201,168,76,.3))}
+.orn::after{background:linear-gradient(to left,transparent,rgba(201,168,76,.3))}
+.orn span{font-family:var(--fcinzel);color:var(--gold);font-size:.75rem;opacity:.55}
+
+/* ══ ARCH / CONFESSION CARD ══ */
+.arch-wrap{max-width:800px;margin:0 auto}
+.arch-top{width:100%;height:55px;position:relative;overflow:hidden;pointer-events:none}
+.arch-top::before{content:'';position:absolute;bottom:0;left:-5%;width:110%;height:190px;border-radius:50% 50% 0 0;border:1px solid rgba(201,168,76,.2);border-bottom:none;background:linear-gradient(to bottom,rgba(201,168,76,.025),transparent)}
+.arch-c{background:var(--card);border-left:1px solid var(--border);border-right:1px solid var(--border);border-bottom:1px solid var(--border);padding:2.8rem;position:relative;overflow:hidden}
+.arch-c::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,transparent,var(--gold),transparent)}
+.arch-c::after{content:'\201C';position:absolute;top:-25px;left:16px;font-family:var(--fcormo);font-size:16rem;color:rgba(201,168,76,.025);line-height:1;pointer-events:none}
+.arch-bot{width:100%;height:25px;position:relative}
+.arch-bot::after{content:'';position:absolute;top:0;left:5%;width:90%;height:1px;background:linear-gradient(to right,transparent,rgba(201,168,76,.2),transparent)}
+.wax-s{width:46px;height:46px;border-radius:50%;background:radial-gradient(circle at 33% 33%,var(--crim2),var(--crimson));position:absolute;right:18px;top:-20px;display:flex;align-items:center;justify-content:center;font-size:1.05rem;box-shadow:0 4px 18px rgba(139,0,0,.45),inset 0 1px 3px rgba(255,255,255,.18);cursor:pointer;transition:transform .3s,box-shadow .3s;z-index:5}
+.wax-s:hover{transform:scale(1.12) rotate(6deg);box-shadow:0 7px 28px rgba(139,0,0,.55)}
+.wax-s::after{content:'';position:absolute;inset:4px;border-radius:50%;border:1px solid rgba(255,255,255,.12)}
+
+/* ══ FORM ELEMENTS ══ */
+.fl{display:block;font-family:var(--fcinzel);font-size:.65rem;letter-spacing:.28em;color:var(--gold);opacity:.72;margin-bottom:.55rem;text-transform:uppercase}
+.fg{margin-bottom:1.75rem}
+.fi,.fta{width:100%;background:rgba(255,255,255,.022);border:1px solid rgba(201,168,76,.14);border-radius:var(--r3);color:var(--ash);padding:.88rem 1.1rem;font-family:var(--fbn);font-size:.97rem;transition:all var(--trans);outline:none;resize:none}
+.fi:focus,.fta:focus{border-color:rgba(201,168,76,.42);background:rgba(255,255,255,.038);box-shadow:0 0 0 3px rgba(201,168,76,.04)}
+.fta{min-height:145px;line-height:1.88}
+.fi::placeholder,.fta::placeholder{color:rgba(139,115,85,.32)}
+.char-r{display:flex;justify-content:space-between;align-items:center;margin-top:.38rem}
+.char-c{font-size:.7rem;color:var(--sand);opacity:.4}
+.emo-d{font-size:1.25rem;transition:all .38s;filter:drop-shadow(0 0 6px rgba(201,168,76,.3))}
+
+/* Pills row */
+.pill-row{display:flex;flex-wrap:wrap;gap:.55rem;margin-bottom:.5rem}
+.pill{padding:.4rem 1.1rem;border:1px solid rgba(201,168,76,.18);border-radius:var(--r50);font-size:.7rem;letter-spacing:.12em;cursor:pointer;color:var(--sand);background:transparent;transition:all .3s;font-family:var(--fcinzel);text-transform:uppercase}
+.pill:hover,.pill.on{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.07);box-shadow:0 0 12px rgba(201,168,76,.09)}
+.pill.sm{padding:.32rem .85rem;font-size:.62rem}
+.pill.crim{border-color:rgba(139,0,0,.3);color:rgba(192,57,43,.65)}
+.pill.crim:hover,.pill.crim.on{border-color:var(--crim2);color:#e07070;background:rgba(139,0,0,.08)}
+
+/* Mood slider */
+.mood-w{margin-bottom:2.3rem}
+.mood-lbs{display:flex;justify-content:space-between;margin-bottom:.55rem}
+.mlb{font-family:var(--fcinzel);font-size:.58rem;letter-spacing:.12em;color:var(--sand);opacity:.5;text-transform:uppercase}
+.mood-sl{width:100%;-webkit-appearance:none;appearance:none;height:3px;border-radius:2px;background:linear-gradient(to right,rgba(27,42,74,.5),rgba(201,168,76,.4),rgba(139,0,0,.6));outline:none;cursor:pointer}
+.mood-sl::-webkit-slider-thumb{-webkit-appearance:none;width:19px;height:19px;border-radius:50%;background:radial-gradient(circle at 35% 35%,var(--gold2),var(--gold));box-shadow:0 0 12px rgba(201,168,76,.5);cursor:pointer}
+.mood-em{text-align:center;font-size:1.9rem;margin-top:.55rem;transition:all .35s}
+
+/* AI Chars */
+.ai-chars{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1.8rem}
+.ach{padding:.7rem .8rem;border:1px solid rgba(201,168,76,.14);border-radius:var(--r4);cursor:pointer;transition:all .3s;text-align:center;flex:1;min-width:90px;background:transparent}
+.ach:hover,.ach.on{border-color:var(--gold);background:rgba(201,168,76,.06)}
+.ach-ic{font-size:1.35rem;display:block;margin-bottom:.28rem}
+.ach-n{font-family:var(--fcinzel);font-size:.6rem;letter-spacing:.12em;color:var(--sand);text-transform:uppercase}
+.ach.on .ach-n{color:var(--gold)}
+
+/* Submit */
+.sub-btn{width:100%;padding:1.15rem;background:linear-gradient(135deg,rgba(38,22,8,.92),rgba(22,13,6,.96));border:1px solid var(--gold);color:var(--gold);font-family:var(--fcinzel);font-size:.85rem;letter-spacing:.42em;cursor:pointer;border-radius:var(--r3);transition:all .42s;position:relative;overflow:hidden;text-transform:uppercase}
+.sub-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(201,168,76,.18),rgba(201,168,76,.04));transform:scaleX(0);transform-origin:left;transition:transform .42s}
+.sub-btn:hover::before{transform:scaleX(1)}
+.sub-btn:hover{box-shadow:0 0 42px rgba(201,168,76,.18),inset 0 0 22px rgba(201,168,76,.04);letter-spacing:.52em}
+.sub-btn:disabled{opacity:.55;cursor:not-allowed}
+.anon-n{display:flex;align-items:center;justify-content:center;gap:.5rem;margin-top:.9rem;color:var(--sand);font-size:.72rem;opacity:.45;font-family:var(--fcinzel);letter-spacing:.12em}
+
+/* ══ AI BOX ══ */
+.ai-box{display:none;margin-top:1.9rem;border:1px solid rgba(139,0,0,.28);border-radius:var(--r4);overflow:hidden;animation:fadeUp .5s ease}
+.ai-box.show{display:block}
+.aib-head{padding:.78rem 1.2rem;background:rgba(139,0,0,.09);display:flex;align-items:center;gap:.6rem;border-bottom:1px solid rgba(139,0,0,.18)}
+.aib-lb{font-family:var(--fcinzel);font-size:.62rem;letter-spacing:.28em;color:#e07070;text-transform:uppercase}
+.aib-body{padding:1.4rem 1.5rem;font-family:var(--fcormo);font-style:italic;font-size:1.08rem;line-height:1.95;color:rgba(245,240,232,.83)}
+.aib-poem{padding:1.3rem 1.5rem;font-family:var(--fcormo);font-style:italic;font-size:1.02rem;line-height:2.3;color:rgba(245,240,232,.78);border-top:1px solid rgba(201,168,76,.09);white-space:pre-line;letter-spacing:.02em}
+.sin-m{padding:.88rem 1.4rem;background:rgba(45,27,105,.1);border-top:1px solid rgba(45,27,105,.2);display:flex;align-items:center;gap:1.1rem}
+.sin-lb{font-family:var(--fcinzel);font-size:.6rem;letter-spacing:.2em;color:var(--purp2);text-transform:uppercase}
+.sin-v{font-family:var(--fcinzel);font-size:.88rem;color:var(--purp2)}
+.heal-w{padding:.88rem 1.4rem;border-top:1px solid rgba(201,168,76,.08)}
+.heal-lb{font-family:var(--fcinzel);font-size:.6rem;letter-spacing:.2em;color:var(--gold);opacity:.6;text-transform:uppercase;margin-bottom:.55rem}
+.heal-row{display:flex;align-items:center;gap:1rem}
+.heal-sl{flex:1;-webkit-appearance:none;appearance:none;height:3px;background:linear-gradient(to right,var(--crimson),var(--gold),#60e090);border-radius:2px;outline:none;cursor:pointer}
+.heal-sl::-webkit-slider-thumb{-webkit-appearance:none;width:17px;height:17px;border-radius:50%;background:radial-gradient(circle at 35% 35%,var(--gold2),var(--gold));box-shadow:0 0 10px rgba(201,168,76,.5);cursor:pointer}
+.heal-v{font-family:var(--fcinzel);font-size:.75rem;color:var(--gold);min-width:30px;text-align:right}
+.mc-row{padding:.88rem 1.2rem;border-top:1px solid rgba(201,168,76,.08);display:flex;gap:.5rem}
+.mc-inp{flex:1;background:rgba(255,255,255,.025);border:1px solid rgba(201,168,76,.14);color:var(--ash);padding:.58rem .88rem;font-family:var(--fbn);font-size:.88rem;border-radius:var(--r3);outline:none;transition:border .3s}
+.mc-inp:focus{border-color:rgba(201,168,76,.38)}
+.mc-btn{padding:.58rem 1.1rem;background:transparent;border:1px solid rgba(201,168,76,.28);color:var(--gold);font-family:var(--fcinzel);font-size:.62rem;letter-spacing:.15em;cursor:pointer;border-radius:var(--r3);transition:all .3s;white-space:nowrap}
+.mc-btn:hover{background:rgba(201,168,76,.07)}
+
+/* ══ DAILY QUESTION ══ */
+.dq-box{max-width:700px;margin:0 auto 5rem;background:linear-gradient(145deg,rgba(27,42,74,.25),rgba(14,10,8,.6));border:1px solid rgba(27,42,74,.5);border-radius:var(--r4);padding:2.2rem;text-align:center;position:relative;overflow:hidden}
+.dq-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,transparent,rgba(27,42,74,.8),transparent)}
+.dq-icon{font-size:2rem;margin-bottom:.8rem}
+.dq-q{font-family:var(--fcormo);font-style:italic;font-size:1.25rem;color:var(--ash);line-height:1.8;margin-bottom:1.2rem;opacity:.85}
+.dq-ans{width:100%;background:rgba(255,255,255,.025);border:1px solid rgba(27,42,74,.5);border-radius:var(--r3);color:var(--ash);padding:.78rem 1rem;font-family:var(--fbn);font-size:.95rem;outline:none;transition:border .3s;resize:none;min-height:75px}
+.dq-ans:focus{border-color:rgba(27,42,74,.9)}
+.dq-btn{margin-top:.7rem;padding:.65rem 2rem;background:transparent;border:1px solid rgba(27,42,74,.7);color:rgba(96,192,224,.7);font-family:var(--fcinzel);font-size:.68rem;letter-spacing:.25em;cursor:pointer;border-radius:var(--r50);transition:all .3s;text-transform:uppercase}
+.dq-btn:hover{border-color:rgba(96,192,224,.5);color:rgba(96,192,224,1);background:rgba(27,42,74,.2)}
+
+/* ══ WALL ══ */
+#wall{padding:6rem 2rem;position:relative;z-index:10}
+.wall-inner{max-width:1200px;margin:0 auto}
+.vtabs{display:flex;gap:.45rem;justify-content:center;margin-bottom:1.8rem}
+.vt{padding:.45rem 1.4rem;background:transparent;border:1px solid rgba(201,168,76,.18);color:var(--sand);font-family:var(--fcinzel);font-size:.66rem;letter-spacing:.2em;cursor:pointer;border-radius:2px;transition:all .3s;text-transform:uppercase}
+.vt.on{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.06)}
+.fbar{display:flex;flex-wrap:wrap;gap:.45rem;justify-content:center;margin-bottom:3rem}
+.fb{padding:.38rem 1.15rem;background:transparent;border:1px solid rgba(201,168,76,.16);color:var(--sand);font-family:var(--fcinzel);font-size:.65rem;letter-spacing:.14em;cursor:pointer;border-radius:var(--r50);transition:all .3s;text-transform:uppercase}
+.fb:hover,.fb.on{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.06)}
+.search-w{position:relative;max-width:400px;margin:0 auto 2rem}
+.search-i{width:100%;background:rgba(255,255,255,.022);border:1px solid rgba(201,168,76,.14);border-radius:var(--r50);color:var(--ash);padding:.65rem 1.2rem .65rem 2.5rem;font-family:var(--fbn);font-size:.9rem;outline:none;transition:border .3s}
+.search-i:focus{border-color:rgba(201,168,76,.38)}
+.search-ic{position:absolute;left:.9rem;top:50%;transform:translateY(-50%);font-size:.9rem;opacity:.4;pointer-events:none}
+
+/* Grid */
+#gv{display:grid;grid-template-columns:repeat(auto-fill,minmax(295px,1fr));gap:1.4rem}
+.cc{background:var(--card);border:1px solid var(--border);border-radius:var(--r4);padding:1.85rem;position:relative;transition:all .42s ease;overflow:hidden;cursor:pointer}
+.cc::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(201,168,76,.04),transparent 68%);opacity:0;transition:opacity .42s}
+.cc:hover{border-color:var(--border-h);transform:translateY(-4px);box-shadow:0 22px 65px rgba(0,0,0,.48),0 0 28px rgba(201,168,76,.05)}
+.cc:hover::before{opacity:1}
+.cc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.1rem}
+.cbadge{padding:.22rem .78rem;border-radius:var(--r50);font-family:var(--fcinzel);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase}
+.bl{background:rgba(139,0,0,.2);color:#e07070;border:1px solid rgba(139,0,0,.38)}
+.bs{background:rgba(45,27,105,.2);color:#a080e0;border:1px solid rgba(45,27,105,.38)}
+.br{background:rgba(27,42,74,.2);color:#60c0e0;border:1px solid rgba(27,42,74,.38)}
+.bf{background:rgba(100,80,20,.2);color:#e0b040;border:1px solid rgba(100,80,20,.38)}
+.bj{background:rgba(20,80,40,.2);color:#60e090;border:1px solid rgba(20,80,40,.38)}
+.cc-alias{font-family:var(--fcinzel);font-size:.6rem;letter-spacing:.14em;color:var(--sand);opacity:.45;text-transform:uppercase}
+.cc-txt{font-family:var(--fcormo);font-style:italic;font-size:1.02rem;line-height:1.88;color:rgba(245,240,232,.76);margin-bottom:1.4rem}
+.cc-ft{display:flex;justify-content:space-between;align-items:center;padding-top:.9rem;border-top:1px solid rgba(201,168,76,.07)}
+.cc-time{font-family:var(--fcinzel);font-size:.58rem;letter-spacing:.14em;color:var(--sand);opacity:.35;text-transform:uppercase}
+.cc-reacts{display:flex;gap:.7rem}
+.rbt{background:none;border:none;cursor:pointer;color:var(--sand);opacity:.52;transition:all .22s;display:flex;align-items:center;gap:.28rem;font-family:var(--fcinzel);font-size:.62rem;letter-spacing:.08em}
+.rbt:hover{opacity:1;transform:scale(1.14);color:var(--gold)}
+.cotd{position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--gold3),var(--gold));color:#1a0e08;font-family:var(--fcinzel);font-size:.56rem;letter-spacing:.18em;padding:.18rem .78rem;border-radius:0 0 4px 4px;text-transform:uppercase;white-space:nowrap}
+.thread-btn{background:none;border:none;cursor:pointer;font-family:var(--fcinzel);font-size:.6rem;letter-spacing:.12em;color:var(--sand);opacity:.4;transition:all .3s;text-transform:uppercase;padding:.2rem 0;display:block;margin-top:.5rem}
+.thread-btn:hover{opacity:.8;color:var(--gold)}
+.thread-area{display:none;margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(201,168,76,.07)}
+.thread-area.open{display:block}
+.thread-inp{width:100%;background:rgba(255,255,255,.02);border:1px solid rgba(201,168,76,.1);border-radius:var(--r3);color:var(--ash);padding:.55rem .88rem;font-family:var(--fbn);font-size:.88rem;outline:none;resize:none;min-height:60px;transition:border .3s}
+.thread-inp:focus{border-color:rgba(201,168,76,.3)}
+.thread-sbtn{margin-top:.4rem;padding:.4rem 1rem;background:transparent;border:1px solid rgba(201,168,76,.22);color:var(--gold);font-family:var(--fcinzel);font-size:.6rem;letter-spacing:.18em;cursor:pointer;border-radius:2px;transition:all .3s;text-transform:uppercase}
+.thread-sbtn:hover{background:rgba(201,168,76,.07)}
+.thread-list{margin-top:.7rem;display:flex;flex-direction:column;gap:.5rem}
+.thread-item{font-family:var(--fcormo);font-style:italic;font-size:.9rem;color:rgba(245,240,232,.55);line-height:1.6;padding:.4rem 0;border-bottom:1px solid rgba(201,168,76,.05)}
+
+/* Constellation */
+#cv{display:none;border-radius:var(--r4);border:1px solid rgba(201,168,76,.07);overflow:hidden;background:radial-gradient(ellipse at center,rgba(27,42,74,.2),transparent)}
+
+/* Emotion Heatmap */
+.heatmap-w{background:var(--card);border:1px solid var(--border);border-radius:var(--r4);padding:2rem;margin-top:3rem}
+.hm-title{font-family:var(--fcinzel);font-size:.78rem;letter-spacing:.3em;color:var(--gold);opacity:.7;text-transform:uppercase;margin-bottom:1.5rem;text-align:center}
+.hm-bars{display:flex;flex-direction:column;gap:.8rem}
+.hm-row{display:flex;align-items:center;gap:.8rem}
+.hm-lbl{font-family:var(--fcinzel);font-size:.65rem;letter-spacing:.12em;color:var(--sand);width:90px;text-transform:uppercase;text-align:right;opacity:.7}
+.hm-bar-w{flex:1;height:6px;background:rgba(255,255,255,.04);border-radius:3px;overflow:hidden}
+.hm-bar-f{height:100%;border-radius:3px;transition:width 1.5s cubic-bezier(.4,0,.2,1)}
+.hm-pct{font-family:var(--fcinzel);font-size:.62rem;color:var(--sand);opacity:.5;min-width:35px}
+
+/* ══ MY DIARY ══ */
+#diary{padding:7rem 2rem;position:relative;z-index:10}
+.diary-inner{max-width:780px;margin:0 auto}
+.diary-empty{text-align:center;padding:4rem;color:var(--sand);opacity:.4;font-family:var(--fcormo);font-style:italic;font-size:1.1rem}
+.diary-tl{display:flex;flex-direction:column;gap:1.2rem}
+.dtl-item{display:flex;gap:1.5rem;position:relative}
+.dtl-item::before{content:'';position:absolute;left:10px;top:25px;bottom:-25px;width:1px;background:linear-gradient(to bottom,rgba(201,168,76,.2),transparent)}
+.dtl-dot{width:22px;height:22px;border-radius:50%;border:2px solid var(--gold);background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:.7rem;flex-shrink:0;margin-top:4px}
+.dtl-c{flex:1;background:var(--card);border:1px solid var(--border);border-radius:var(--r4);padding:1.4rem;transition:all .3s}
+.dtl-c:hover{border-color:var(--border-h)}
+.dtl-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.7rem}
+.dtl-cat{font-family:var(--fcinzel);font-size:.6rem;letter-spacing:.14em;color:var(--gold);text-transform:uppercase;opacity:.7}
+.dtl-time{font-family:var(--fcinzel);font-size:.58rem;letter-spacing:.12em;color:var(--sand);opacity:.35;text-transform:uppercase}
+.dtl-txt{font-family:var(--fcormo);font-style:italic;font-size:1rem;line-height:1.82;color:rgba(245,240,232,.72)}
+.dtl-del{background:none;border:none;cursor:pointer;font-size:.75rem;opacity:.3;transition:opacity .2s;float:right;color:var(--sand)}
+.dtl-del:hover{opacity:.7;color:var(--crim2)}
+.persona-card{background:linear-gradient(145deg,rgba(45,27,105,.15),rgba(14,10,8,.8));border:1px solid rgba(45,27,105,.35);border-radius:var(--r4);padding:1.8rem;margin-top:2.5rem;text-align:center}
+.persona-icon{font-size:3rem;margin-bottom:.8rem}
+.persona-title{font-family:var(--fcinzel);font-size:1rem;letter-spacing:.2em;color:var(--purp2);margin-bottom:.5rem;text-transform:uppercase}
+.persona-desc{font-family:var(--fcormo);font-style:italic;font-size:1.05rem;color:var(--sand);opacity:.75;line-height:1.8}
+
+/* ══ SHARE CARD ══ */
+.share-modal{position:fixed;inset:0;z-index:8500;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.75);backdrop-filter:blur(6px)}
+.share-modal.show{display:flex;animation:fadeIn .3s ease}
+.share-box{background:linear-gradient(145deg,#1a100a,#0e0a07);border:1px solid rgba(201,168,76,.28);padding:2.5rem;border-radius:var(--r4);max-width:480px;width:90%;position:relative}
+.share-box h3{font-family:var(--fcinzel);font-size:1.2rem;color:var(--gold);margin-bottom:.5rem;letter-spacing:.15em;text-align:center}
+.share-box p{font-family:var(--fcormo);font-style:italic;color:var(--sand);text-align:center;margin-bottom:1.5rem;font-size:.95rem}
+.share-canvas-w{border:1px solid rgba(201,168,76,.2);border-radius:var(--r3);overflow:hidden;margin-bottom:1.5rem}
+.share-btns{display:flex;gap:.8rem;flex-wrap:wrap;justify-content:center}
+.modal-close{position:absolute;top:12px;right:14px;background:none;border:none;color:var(--sand);cursor:pointer;font-size:1.1rem;opacity:.4;transition:opacity .2s}
+.modal-close:hover{opacity:.8}
+
+/* ══ TIME CAPSULE ══ */
+.tc-wrap{max-width:700px;margin:0 auto}
+.tc-items{display:flex;flex-direction:column;gap:1rem;margin-top:2rem}
+.tc-item{background:var(--card);border:1px solid rgba(196,98,45,.22);border-radius:var(--r4);padding:1.4rem;display:flex;align-items:center;gap:1.2rem}
+.tc-icon{font-size:1.8rem;flex-shrink:0}
+.tc-info{flex:1}
+.tc-date{font-family:var(--fcinzel);font-size:.65rem;letter-spacing:.2em;color:var(--ember2);text-transform:uppercase;margin-bottom:.3rem}
+.tc-txt{font-family:var(--fcormo);font-style:italic;font-size:.95rem;color:var(--sand);opacity:.65;line-height:1.6}
+.tc-lock{font-size:1.2rem;opacity:.4}
+
+/* ══ WEEKLY REPORT ══ */
+.report-box{max-width:700px;margin:0 auto;background:var(--card);border:1px solid var(--border);border-radius:var(--r4);padding:2.5rem;overflow:hidden}
+.report-canvas{width:100%;height:200px;display:block;margin-bottom:1.5rem}
+.report-insights{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem}
+.ri{background:rgba(255,255,255,.025);border:1px solid rgba(201,168,76,.1);border-radius:var(--r3);padding:1rem;text-align:center}
+.ri-icon{font-size:1.5rem;margin-bottom:.4rem}
+.ri-val{font-family:var(--fcinzel);font-size:1.2rem;color:var(--gold);font-weight:600;margin-bottom:.2rem}
+.ri-key{font-family:var(--fcinzel);font-size:.58rem;letter-spacing:.18em;color:var(--sand);opacity:.45;text-transform:uppercase}
+
+/* ══ PETAL / EFFECTS ══ */
+.petal{position:fixed;pointer-events:none;z-index:8000;font-size:1.15rem;animation:petalFall var(--pd,3s) var(--pde,0s) ease-in forwards}
+@keyframes petalFall{0%{top:-50px;left:var(--px);opacity:1;transform:rotate(0) scale(1)}100%{top:110vh;left:calc(var(--px) + var(--pdx));opacity:0;transform:rotate(var(--pr)) scale(.45)}}
+
+/* ══ SOUND ══ */
+#sound-p{position:fixed;bottom:22px;right:22px;z-index:800;display:flex;flex-direction:column;gap:.45rem;align-items:flex-end}
+.sp-btn{padding:.45rem .9rem;background:rgba(12,8,6,.92);border:1px solid rgba(201,168,76,.18);color:var(--sand);font-family:var(--fcinzel);font-size:.6rem;letter-spacing:.14em;cursor:pointer;border-radius:var(--r50);transition:all .3s;text-transform:uppercase;backdrop-filter:blur(8px);white-space:nowrap}
+.sp-btn:hover,.sp-btn.on{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.07)}
+#snd-tog{width:40px;height:40px;border-radius:50%;padding:0;display:flex;align-items:center;justify-content:center;font-size:1rem}
+
+/* ══ TOAST ══ */
+#toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(110px);background:rgba(18,12,8,.97);border:1px solid rgba(201,168,76,.28);color:var(--gold);padding:.85rem 1.9rem;font-family:var(--fcinzel);font-size:.72rem;letter-spacing:.18em;border-radius:var(--r3);z-index:9000;transition:transform .42s cubic-bezier(.34,1.56,.64,1);pointer-events:none;white-space:nowrap}
+#toast.show{transform:translateX(-50%) translateY(0)}
+
+/* ══ EXIT ══ */
+#exit{position:fixed;inset:0;z-index:8500;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.72);backdrop-filter:blur(5px)}
+#exit.show{display:flex;animation:fadeIn .3s ease}
+.exit-b{background:linear-gradient(145deg,#1a100a,#0e0a07);border:1px solid rgba(201,168,76,.28);padding:2.8rem;border-radius:var(--r4);max-width:410px;text-align:center;position:relative}
+.exit-b h3{font-family:var(--fcinzel);font-size:1.35rem;color:var(--gold);margin-bottom:.9rem;letter-spacing:.12em}
+.exit-b p{font-family:var(--fcormo);font-style:italic;color:var(--sand);font-size:1.02rem;line-height:1.82;margin-bottom:1.8rem}
+.exit-btns{display:flex;gap:.9rem;justify-content:center}
+.xclose{position:absolute;top:11px;right:14px;background:none;border:none;color:var(--sand);cursor:pointer;font-size:1.1rem;opacity:.35;transition:opacity .2s}
+.xclose:hover{opacity:.75}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+/* ══ FOOTER ══ */
+footer{padding:5rem 4rem 3rem;text-align:center;border-top:1px solid rgba(201,168,76,.07);position:relative;z-index:10}
+.foot-logo{font-family:var(--fcinzel);font-size:1.5rem;color:var(--gold);letter-spacing:.3em;margin-bottom:1.4rem;opacity:.72}
+.foot-rule{width:55px;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent);margin:1.8rem auto}
+.foot-txt{font-family:var(--fcormo);font-style:italic;font-size:.92rem;color:var(--sand);opacity:.42;line-height:2}
+.foot-copy{font-size:.6rem;color:var(--sand);opacity:.18;letter-spacing:.25em;font-family:var(--fcinzel);margin-top:1.8rem}
+.foot-links{display:flex;gap:2rem;justify-content:center;margin-top:1.5rem}
+.foot-links a{font-family:var(--fcinzel);font-size:.6rem;letter-spacing:.2em;color:var(--sand);opacity:.3;text-decoration:none;transition:opacity .3s;text-transform:uppercase}
+.foot-links a:hover{opacity:.65;color:var(--gold)}
+
+/* ══ LOADING DOTS ══ */
+.ld{display:inline-flex;gap:4px;align-items:center}
+.ld span{width:5px;height:5px;background:var(--gold);border-radius:50%;animation:ldAn 1.2s ease-in-out infinite}
+.ld span:nth-child(2){animation-delay:.2s}
+.ld span:nth-child(3){animation-delay:.4s}
+@keyframes ldAn{0%,80%,100%{opacity:.2;transform:scale(.8)}40%{opacity:1;transform:scale(1)}}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:768px){
+  nav{padding:.9rem 1.2rem}
+  .nav-links{display:none}
+  #hamb{display:flex}
+  .nav-right .nav-btn:not(#mid-btn){display:none}
+  .arch-c{padding:1.4rem 1.2rem}
+  .stats-s{gap:2rem;padding:2rem}
+  .weather-s{gap:1.5rem;padding:1.2rem 1rem}
+  .ai-chars{gap:.35rem}
+  .ach{min-width:75px;padding:.5rem .5rem}
+  #gv{grid-template-columns:1fr}
+  .hero-ctas{gap:.8rem}
+  .share-box{padding:1.5rem}
+  footer{padding:3rem 1.5rem}
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="cur"></div><div id="cur-ring"></div>
+
+<!-- OVERLAY LAYERS -->
+<div id="spotlight"></div>
+<div id="noise"></div>
+<div id="vignette"></div>
+<div id="fog"></div>
+
+<!-- DOOR -->
+<div id="door">
+  <div class="dh"><div class="dk"><div class="dk-hole"></div><div class="dk-circle"></div></div></div>
+  <div class="dh"><div class="dk"><div class="dk-hole"></div><div class="dk-circle"></div></div></div>
+  <div class="door-light"></div>
+</div>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="lc-wrap">
+    <div class="lc-flame" id="lf"></div>
+    <div class="lc-wick"></div>
+    <div class="lc-body"></div>
+    <div class="lc-pool"></div>
+  </div>
+  <div id="ld-title">Digital Confession</div>
+  <div id="ld-tw"></div>
+  <div id="ld-bar"><div id="ld-fill"></div></div>
+</div>
+
+<!-- SOUND -->
+<div id="sound-p">
+  <button class="sp-btn" id="snd-tog" onclick="toggleSound()" title="Sound">🔇</button>
+  <div id="snd-opts" style="display:none;flex-direction:column;gap:.4rem;align-items:flex-end">
+    <button class="sp-btn" onclick="setAmb('rain')">🌧️ বৃষ্টি</button>
+    <button class="sp-btn" onclick="setAmb('wind')">🍃 বাতাস</button>
+    <button class="sp-btn" onclick="setAmb('piano')">🎹 পিয়ানো</button>
+    <button class="sp-btn" onclick="setAmb('off')">🔕 নীরব</button>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="#hero"><span class="nav-dot"></span>Digital Confession</a>
+  <ul class="nav-links">
+    <li><a href="#confess">স্বীকারোক্তি</a></li>
+    <li><a href="#wall">দেওয়াল</a></li>
+    <li><a href="#diary">ডায়েরি</a></li>
+    <li><a href="#capsule">টাইম ক্যাপসুল</a></li>
+    <li><a href="#report">সাপ্তাহিক</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="nav-btn" id="mid-btn" onclick="toggleMidnight()">🌙 মধ্যরাত</button>
+    <div id="hamb" onclick="toggleMobMenu()"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+<!-- MOB MENU -->
+<div class="mob-menu" id="mob-menu">
+  <a href="#confess" onclick="toggleMobMenu()">স্বীকারোক্তি</a>
+  <a href="#wall" onclick="toggleMobMenu()">দেওয়াল</a>
+  <a href="#diary" onclick="toggleMobMenu()">ডায়েরি</a>
+  <a href="#capsule" onclick="toggleMobMenu()">টাইম ক্যাপসুল</a>
+  <a href="#report" onclick="toggleMobMenu()">সাপ্তাহিক</a>
+  <a href="#" onclick="toggleMidnight();toggleMobMenu()">🌙 মধ্যরাত মোড</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <canvas id="stars-c"></canvas>
+  <canvas id="rain-c"></canvas>
+  <div class="hero-cnt">
+    <div class="hero-over">✦ &nbsp; নামহীন &nbsp;·&nbsp; গোপন &nbsp;·&nbsp; সত্য &nbsp; ✦</div>
+    <h1 class="hero-h1">Digital<br>Confession</h1>
+    <p class="hero-bn">ডিজিটাল স্বীকারোক্তি</p>
+    <div class="hero-rule"></div>
+    <p class="hero-tag" id="htag"></p>
+    <div class="hero-ctas">
+      <a href="#confess" class="btn-p">মনের কথা বলো ✦</a>
+      <a href="#wall" class="btn-g">দেওয়াল দেখো</a>
+    </div>
+  </div>
+  <div id="candle-row"></div>
+  <div class="scroll-h"><div class="scroll-l"></div><span>নিচে যাও</span></div>
+</section>
+
+<!-- WEATHER -->
+<div class="weather-s">
+  <div class="wi"><span class="wicon">⛈️</span><div class="winfo"><span class="wval" id="w-em">অনুতাপের রাত</span><span class="wkey">আজকের অনুভূতি</span></div></div>
+  <div class="wi"><div class="hb-dot"></div><div class="winfo"><span class="wval" id="w-rate">৪৭/ঘণ্টা</span><span class="wkey">স্বীকারোক্তির হার</span></div></div>
+  <div class="wi"><span class="wicon">🌙</span><div class="winfo"><span class="wval" id="w-moon">পূর্ণিমা</span><span class="wkey">আজকের চাঁদ</span></div></div>
+  <div class="wi"><span class="wicon">🕯️</span><div class="winfo"><span class="wval" id="w-on">২৩৪ জন</span><span class="wkey">এখন অনলাইন</span></div></div>
+  <div class="wi"><span class="wicon">🔥</span><div class="winfo"><span class="wval" id="w-streak">৩ দিন</span><span class="wkey">তোমার streak</span></div></div>
+</div>
+
+<!-- STATS -->
+<div class="stats-s">
+  <div class="stat"><span class="stat-n" id="s1">০</span><span class="stat-l">স্বীকারোক্তি</span></div>
+  <div class="stat"><span class="stat-n" id="s2">০</span><span class="stat-l">নামহীন আত্মা</span></div>
+  <div class="stat"><span class="stat-n" id="s3">০</span><span class="stat-l">মুক্তি পেয়েছে</span></div>
+  <div class="stat"><span class="stat-n" id="s4">০</span><span class="stat-l">দেশ থেকে</span></div>
+</div>
+
+<!-- DAILY QUESTION -->
+<section class="sec" style="padding-bottom:0" id="dq-sec">
+  <div style="max-width:700px;margin:0 auto">
+    <div class="sec-lb">✦ আজকের প্রশ্ন</div>
+    <div class="dq-box" id="dq-box">
+      <div class="dq-icon">🌙</div>
+      <p class="dq-q" id="dq-q"></p>
+      <textarea class="dq-ans" id="dq-ans" placeholder="তোমার উত্তর লিখো..." rows="3"></textarea>
+      <button class="dq-btn" onclick="submitDQ()">উত্তর দাও ✦</button>
+    </div>
+  </div>
+</section>
+
+<!-- CONFESSION CHAMBER -->
+<section class="sec" id="confess">
+  <div class="sec-lb">✦ তোমার কথা বলো</div>
+  <h2 class="sec-h">স্বীকারোক্তির কক্ষ</h2>
+  <p class="sec-d">এখানে কেউ তোমাকে চিনবে না। শুধু সত্যি কথা বলো।</p>
+  <div class="arch-wrap">
+    <div class="arch-top"></div>
+    <div class="arch-c">
+      <div class="wax-s" title="সিল করা">🕊️</div>
+
+      <!-- Mood -->
+      <div class="mood-w">
+        <label class="fl">মনের অবস্থা</label>
+        <div class="mood-lbs"><span class="mlb">😌 শান্ত</span><span class="mlb">😔 দু:খী</span><span class="mlb">💔 ভাঙা</span><span class="mlb">😤 রাগী</span></div>
+        <input type="range" class="mood-sl" id="mood" min="0" max="100" value="40" oninput="onMood(this.value)">
+        <div class="mood-em" id="mood-em">😔</div>
+      </div>
+
+      <!-- Category -->
+      <div class="fg">
+        <label class="fl">বিভাগ</label>
+        <div class="pill-row" id="cats">
+          <button class="pill on" data-cat="Love">💔 ভালোবাসা</button>
+          <button class="pill" data-cat="Secret">🤫 রহস্য</button>
+          <button class="pill" data-cat="Regret">😔 অনুতাপ</button>
+          <button class="pill" data-cat="Fear">😰 ভয়</button>
+          <button class="pill" data-cat="Joy">✨ আনন্দ</button>
+        </div>
+      </div>
+
+      <!-- Write Mode -->
+      <div class="fg">
+        <label class="fl">লেখার ধরন</label>
+        <div class="pill-row" id="wmodes">
+          <button class="pill sm on" onclick="setWMode('normal',this)">✍️ সাধারণ</button>
+          <button class="pill sm" onclick="setWMode('letter',this)">💌 চিঠি</button>
+          <button class="pill sm" onclick="setWMode('template',this)">📋 টেমপ্লেট</button>
+          <button class="pill sm" onclick="setWMode('future',this)">📖 ভবিষ্যতে</button>
+        </div>
+        <div id="ltr-hdr" style="display:none;margin-top:.5rem;font-family:var(--fcormo);font-style:italic;color:var(--sand);opacity:.6;font-size:.95rem;padding-bottom:.4rem;border-bottom:1px solid var(--border)">প্রিয় <span id="ltr-to">অতীত আমি</span>,</div>
+      </div>
+
+      <!-- Text -->
+      <div class="fg">
+        <label class="fl">তোমার স্বীকারোক্তি</label>
+        <textarea class="fta" id="ctext" maxlength="650" oninput="onText()" placeholder="লিখো তোমার কথা... এখানে কেউ তোমাকে চিনবে না। প্রতিটি অনুভূতিই সত্য।"></textarea>
+        <div class="char-r"><span class="char-c"><span id="cc">০</span> / ৬৫০</span><span class="emo-d" id="emod">✏️</span></div>
+      </div>
+
+      <!-- Alias -->
+      <div class="fg">
+        <label class="fl">নামহীন পরিচয় (ঐচ্ছিক)</label>
+        <input class="fi" id="alias" type="text" placeholder="যেমন: একজন হারানো আত্মা, রাতের পাখি...">
+      </div>
+
+      <!-- Privacy -->
+      <div class="fg">
+        <label class="fl">🔐 গোপনীয়তার স্তর</label>
+        <div class="pill-row" id="privs">
+          <button class="pill sm on" data-priv="all">🌍 সবাই</button>
+          <button class="pill sm" data-priv="anon">👤 নামহীন</button>
+          <button class="pill sm" data-priv="ai">🤖 শুধু AI</button>
+        </div>
+      </div>
+
+      <!-- Burn -->
+      <div class="fg">
+        <label class="fl">⏳ পুড়ে যাক</label>
+        <div class="pill-row" id="burns">
+          <button class="pill sm crim on" data-burn="forever">♾️ চিরকাল</button>
+          <button class="pill sm crim" data-burn="30">🔥 ৩০ দিনে</button>
+          <button class="pill sm crim" data-burn="7">🔥 ৭ দিনে</button>
+          <button class="pill sm crim" data-burn="1">🕯️ ২৪ ঘণ্টায়</button>
+        </div>
+      </div>
+
+      <!-- AI Chars -->
+      <div class="fg">
+        <label class="fl">🤖 কে শুনবে?</label>
+        <div class="ai-chars" id="achars">
+          <div class="ach on" data-char="sage" onclick="setAchar(this)"><span class="ach-ic">👴</span><span class="ach-n">জ্ঞানী</span></div>
+          <div class="ach" data-char="night" onclick="setAchar(this)"><span class="ach-ic">🌙</span><span class="ach-n">বন্ধু</span></div>
+          <div class="ach" data-char="lover" onclick="setAchar(this)"><span class="ach-ic">💌</span><span class="ach-n">প্রিয়জন</span></div>
+          <div class="ach" data-char="angel" onclick="setAchar(this)"><span class="ach-ic">👼</span><span class="ach-n">নিষ্পাপ</span></div>
+          <div class="ach" data-char="future" onclick="setAchar(this)"><span class="ach-ic">📖</span><span class="ach-n">ভবিষ্যৎ</span></div>
+        </div>
+      </div>
+
+      <!-- Response Mode -->
+      <div class="fg">
+        <label class="fl">উত্তরের ধরন</label>
+        <div class="pill-row" id="rmodes">
+          <button class="pill sm on" data-rm="normal">💬 সাধারণ</button>
+          <button class="pill sm" data-rm="poetic">🌸 কাব্যিক</button>
+          <button class="pill sm" data-rm="guide">🧭 পথনির্দেশ</button>
+          <button class="pill sm" data-rm="poem">📜 কবিতা</button>
+        </div>
+      </div>
+
+      <button class="sub-btn" id="sbtn" onclick="submitConf()">স্বীকার করো &nbsp;✦</button>
+      <div class="anon-n">🔒 &nbsp; তোমার পরিচয় সম্পূর্ণ গোপন — কোনো ডেটা সংগ্রহ নেই</div>
+
+      <!-- AI BOX -->
+      <div class="ai-box" id="aibox">
+        <div class="aib-head"><span id="ai-ic">👴</span>&nbsp;<span class="aib-lb" id="ai-lb">বিবেক বলছে</span></div>
+        <div class="aib-body" id="ai-txt"></div>
+        <div class="aib-poem" id="ai-poem" style="display:none"></div>
+        <div class="sin-m"><span class="sin-lb">পাপ-মাত্রা</span><span class="sin-v" id="sin-v">😇 ছোট পাপ</span></div>
+        <div class="heal-w">
+          <div class="heal-lb">কতটা হালকা লাগছে?</div>
+          <div class="heal-row">
+            <input type="range" class="heal-sl" id="healsl" min="1" max="10" value="5" oninput="onHeal(this.value)">
+            <span class="heal-v" id="healv">৫/১০</span>
+          </div>
+        </div>
+        <div class="mc-row">
+          <input type="text" class="mc-inp" id="mc-i" placeholder="আরও কথা বলো..." onkeydown="if(event.key==='Enter')mcSend()">
+          <button class="mc-btn" onclick="mcSend()">পাঠাও ✦</button>
+        </div>
+      </div>
+    </div>
+    <div class="arch-bot"></div>
+  </div>
+</section>
+
+<!-- WALL -->
+<section id="wall">
+  <div class="wall-inner">
+    <div class="sec-lb">✦ সবার কথা</div>
+    <h2 class="sec-h">স্বীকারোক্তির দেওয়াল</h2>
+    <p class="sec-d">অন্যদের অনুভূতি পড়ো — হয়তো তোমার কথাই লিখেছে কেউ।</p>
+    <div class="vtabs">
+      <button class="vt on" onclick="setView('grid',this)">⊞ তালিকা</button>
+      <button class="vt" onclick="setView('constellation',this)">✨ তারার মানচিত্র</button>
+    </div>
+    <div class="fbar" id="fbar">
+      <button class="fb on" onclick="wFilter(this,'all')">সব</button>
+      <button class="fb" onclick="wFilter(this,'Love')">💔 ভালোবাসা</button>
+      <button class="fb" onclick="wFilter(this,'Secret')">🤫 রহস্য</button>
+      <button class="fb" onclick="wFilter(this,'Regret')">😔 অনুতাপ</button>
+      <button class="fb" onclick="wFilter(this,'Fear')">😰 ভয়</button>
+      <button class="fb" onclick="wFilter(this,'Joy')">✨ আনন্দ</button>
+      <button class="fb" onclick="randomConf()">🎲 এলোমেলো</button>
+    </div>
+    <div class="search-w"><span class="search-ic">🔍</span><input class="search-i" id="search-i" type="text" placeholder="খুঁজে নাও..." oninput="onSearch()"></div>
+    <div id="gv"></div>
+    <div id="cv"><canvas id="const-c" style="width:100%;height:500px"></canvas></div>
+    <!-- Emotion Heatmap -->
+    <div class="heatmap-w" id="heatmap">
+      <div class="hm-title">✦ আজকের আবেগ মানচিত্র</div>
+      <div class="hm-bars" id="hm-bars"></div>
+    </div>
+  </div>
+</section>
+
+<!-- MY DIARY -->
+<section class="sec" id="diary">
+  <div class="sec-lb">✦ তোমার গল্প</div>
+  <h2 class="sec-h">আমার স্বীকারোক্তির ডায়েরি</h2>
+  <p class="sec-d">তোমার সব স্বীকারোক্তি এখানে সংরক্ষিত — শুধু তোমার জন্য।</p>
+  <div class="diary-inner">
+    <div class="diary-tl" id="diary-tl"></div>
+    <div id="persona-box"></div>
+  </div>
+</section>
+
+<!-- TIME CAPSULE -->
+<section class="sec" id="capsule">
+  <div class="sec-lb">✦ ভবিষ্যতের চিঠি</div>
+  <h2 class="sec-h">টাইম ক্যাপসুল</h2>
+  <p class="sec-d">আজ লিখো, ভবিষ্যতে পড়ো — নির্ধারিত দিনে তোমার কাছে পৌঁছাবে।</p>
+  <div class="tc-wrap">
+    <div class="arch-c" style="border:1px solid rgba(196,98,45,.22);max-width:700px;margin:0 auto">
+      <div class="fg">
+        <label class="fl">ভবিষ্যতের বার্তা</label>
+        <textarea class="fta" id="tc-txt" placeholder="প্রিয় ভবিষ্যৎ আমি... আজ থেকে ৬ মাস পর তুমি এটা পড়বে। আজকের কথা মনে রেখো..." style="min-height:120px"></textarea>
+      </div>
+      <div class="fg">
+        <label class="fl">কখন খুলবে?</label>
+        <div class="pill-row" id="tc-when">
+          <button class="pill sm on" data-tc="30">১ মাস পর</button>
+          <button class="pill sm" data-tc="90">৩ মাস পর</button>
+          <button class="pill sm" data-tc="180">৬ মাস পর</button>
+          <button class="pill sm" data-tc="365">১ বছর পর</button>
+        </div>
+      </div>
+      <button class="sub-btn" onclick="saveCapsule()" style="background:linear-gradient(135deg,rgba(38,18,4,.92),rgba(22,10,3,.96));border-color:var(--ember)">সিল করো ও রেখে দাও ⏳</button>
+    </div>
+    <div class="tc-items" id="tc-items"></div>
+  </div>
+</section>
+
+<!-- WEEKLY REPORT -->
+<section class="sec" id="report">
+  <div class="sec-lb">✦ সাপ্তাহিক</div>
+  <h2 class="sec-h">আবেগের সাপ্তাহিক রিপোর্ট</h2>
+  <p class="sec-d">এই সপ্তাহে সাইটে কী ঘটছে — সবার আবেগের ছবি।</p>
+  <div class="report-box">
+    <canvas class="report-canvas" id="report-c"></canvas>
+    <div class="report-insights" id="report-ins"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="about">
+  <div class="foot-logo">✦ Digital Confession</div>
+  <div class="orn"><span class="orn span">✦ ডিজিটাল স্বীকারোক্তি ✦</span></div>
+  <p class="foot-txt">এই স্থানটি তোমার।<br>কোনো বিচার নেই, কোনো পরিচয় নেই — শুধু সত্য।<br><br><em>"যে কথা মুখে বলা যায় না, তা ডিজিটাল রাতে মুক্তি পায়।"</em></p>
+  <div class="foot-rule"></div>
+  <div class="foot-links"><a href="#confess">স্বীকার করো</a><a href="#wall">দেওয়াল</a><a href="#diary">ডায়েরি</a><a href="#capsule">টাইম ক্যাপসুল</a></div>
+  <p class="foot-copy">© ২০২৪ DIGITAL CONFESSION &nbsp;·&nbsp; সমস্ত অধিকার সংরক্ষিত &nbsp;·&nbsp; তোমার গোপনীয়তা সুরক্ষিত</p>
+</footer>
+
+<div id="toast"></div>
+
+<!-- EXIT POPUP -->
+<div id="exit">
+  <div class="exit-b">
+    <button class="xclose" onclick="closeExit()">✕</button>
+    <h3>🕯️ একটু থামো...</h3>
+    <p>তোমার মনে কি এমন কিছু আছে যা বলতে পারোনি? এই মুহূর্তে হয়তো কেউ তোমার মতোই ভাবছে।</p>
+    <div class="exit-btns"><a href="#confess" class="btn-p" onclick="closeExit()">বলতে চাই ✦</a><button class="btn-g" onclick="closeExit()">পরে আসব</button></div>
+  </div>
+</div>
+
+<!-- SHARE MODAL -->
+<div class="share-modal" id="share-modal">
+  <div class="share-box">
+    <button class="modal-close" onclick="closeShare()">✕</button>
+    <h3>🌸 শেয়ার করো</h3>
+    <p>এই স্বীকারোক্তির সুন্দর কার্ড তৈরি হয়েছে</p>
+    <div class="share-canvas-w"><canvas id="share-c" width="420" height="240" style="width:100%"></canvas></div>
+    <div class="share-btns">
+      <button class="btn-p" onclick="downloadCard()">⬇️ ডাউনলোড</button>
+      <button class="btn-g" onclick="copyConf()">📋 কপি করো</button>
+      <button class="btn-g" onclick="closeShare()">বন্ধ করো</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ╔══════════════════════════════════════════╗
+   ║  DIGITAL CONFESSION — COMPLETE JS ENGINE ║
+   ╚══════════════════════════════════════════╝ */
+
+// ══ STATE ══
+const S = {
+  confs: [], myConfs: [], capsules: [],
+  cat: 'Love', char: 'sage', rmode: 'normal', wmode: 'normal',
+  priv: 'all', burn: 'forever',
+  filter: 'all', view: 'grid', search: '',
+  midnight: false, soundOn: false,
+  chatHist: [], exitShown: false,
+  shareConf: null,
+  streak: 0, lastConfDate: null,
+  session: null
+};
+
+// ══ SESSION TOKEN ══
+function initSession() {
+  let s = localStorage.getItem('dc_session');
+  if (!s) { s = 'user_' + Math.random().toString(36).slice(2); localStorage.setItem('dc_session', s); }
+  S.session = s;
+}
+
+// ══ SAMPLE CONFESSIONS ══
+const SAMPLES = [
+  { id: 1, cat: 'Love', text: 'তাকে ভুলতে পারছি না, যদিও দুই বছর হয়ে গেছে। প্রতিরাতে ঘুমানোর আগে তার কথা মনে পড়ে। সে এখন অনেক সুখী — আর আমি শুধু চাই সে ভালো থাকুক।', alias: 'রাতের তারা', time: '২ ঘণ্টা আগে', likes: 47, hearts: 23, same: 18, cotd: true, threads: [] },
+  { id: 2, cat: 'Secret', text: 'আমি সবাইকে বলেছি ভালো আছি, কিন্তু আসলে প্রতিদিন ভেতরে ভেতরে কাঁদি। হাসিটা আমার সবচেয়ে পুরনো মিথ্যা।', alias: 'হাসিমুখ', time: '৫ ঘণ্টা আগে', likes: 89, hearts: 61, same: 45, threads: [] },
+  { id: 3, cat: 'Regret', text: 'সেদিন মাকে রাগ করে কিছু কথা বলেছিলাম যা কখনো বলা উচিৎ হয়নি। এখন তিনি নেই। সেই কথাগুলো আজীবন বহন করতে হবে।', alias: 'একজন ছেলে', time: '১ দিন আগে', likes: 134, hearts: 98, same: 72, threads: [] },
+  { id: 4, cat: 'Fear', text: 'আমি ভয় পাই যে একদিন সবাই বুঝতে পারবে আমি আসলে কতটা ভেঙে পড়ে আছি। তাই শক্ত থাকার অভিনয় চলছে।', alias: 'শক্ত মুখোশ', time: '৩ দিন আগে', likes: 72, hearts: 55, same: 38, threads: [] },
+  { id: 5, cat: 'Joy', text: 'আজ প্রথমবার একা একা রান্না করলাম এবং ভালো হয়েছে! এই ছোট্ট সাফল্যটা কাউকে বলার নেই তাই এখানে বললাম।', alias: 'রান্নাঘরের বীর', time: '৬ ঘণ্টা আগে', likes: 38, hearts: 42, same: 19, threads: [] },
+  { id: 6, cat: 'Secret', text: 'আমি এমন কারো প্রেমে পড়েছি যে কখনো জানবে না। এটা জানালে সব শেষ হয়ে যাবে, তাই বুকে পুষে রাখছি।', alias: 'দূরের চাঁদ', time: '১২ ঘণ্টা আগে', likes: 56, hearts: 41, same: 30, threads: [] },
+  { id: 7, cat: 'Regret', text: 'বন্ধুর সবচেয়ে কঠিন সময়ে আমি পাশে ছিলাম না। সে মনে নাও রাখতে পারে, কিন্তু আমি কখনো ভুলব না।', alias: 'অনুপস্থিত বন্ধু', time: '২ দিন আগে', likes: 91, hearts: 77, same: 52, threads: [] },
+  { id: 8, cat: 'Love', text: 'প্রতিদিন ভোরে জেগে উঠে তোমার কথা মনে হয়। জানি আর কখনো দেখা হবে না, তবু তুমি আমার সকালের প্রথম ভাবনা।', alias: 'একাকী ভোর', time: '৮ ঘণ্টা আগে', likes: 63, hearts: 58, same: 35, threads: [] },
+  { id: 9, cat: 'Fear', text: 'আমার সবচেয়ে বড় ভয় হলো একদিন ঘুম থেকে উঠে দেখব জীবনে কিছুই অর্জন করিনি। প্রতিটি সকাল এই ভয়টা নিয়েই শুরু হয়।', alias: 'উদ্বিগ্ন স্বপ্নদ্রষ্টা', time: '৪ দিন আগে', likes: 88, hearts: 64, same: 50, threads: [] },
+  { id: 10, cat: 'Joy', text: 'আজ রাস্তায় একটা বিড়ালছানা আমার কোলে এসে ঘুমিয়ে পড়েছিল। মনে হয়েছে পৃথিবীটা এত সুন্দর কেন!', alias: 'বিড়ালপ্রেমী', time: '১৮ ঘণ্টা আগে', likes: 102, hearts: 95, same: 60, threads: [] }
+];
+
+// ══ PERSONAS ══
+const PERSONAS = {
+  sage: { ic: '👴', name: 'বৃদ্ধ জ্ঞানী', p: 'তুমি একজন গভীর জ্ঞানী বৃদ্ধ — দাদার মতো উষ্ণ, অভিজ্ঞ। জীবনের দীর্ঘ অভিজ্ঞতা থেকে কথা বলো।' },
+  night: { ic: '🌙', name: 'রাতের বন্ধু', p: 'তুমি রাতের একাকী, সহানুভূতিশীল বন্ধু। বিচার করো না, শুধু বুঝতে চাও।' },
+  lover: { ic: '💌', name: 'প্রিয়জন', p: 'তুমি কাল্পনিক উষ্ণ প্রিয়জন — মায়াময়, আবেগী, কোমল।' },
+  angel: { ic: '👼', name: 'নিষ্পাপ সত্তা', p: 'তুমি শিশুর মতো নিষ্পাপ সত্তা — বিশুদ্ধ দৃষ্টিভঙ্গি, সরল ভালোবাসা।' },
+  future: { ic: '📖', name: 'ভবিষ্যৎ তুমি', p: 'তুমি এই ব্যক্তির ১০ বছর পরের প্রজ্ঞাময় সত্তা — অতীত জেনে, ভবিষ্যৎ দেখে কথা বলো।' }
+};
+
+const RESP_PROMPTS = {
+  normal: 'উষ্ণ, সহানুভূতিশীল বাংলায় ২-৩ বাক্যে উত্তর দাও। বিচার করবে না।',
+  poetic: 'কাব্যিক, রূপক ভাষায় উত্তর দাও — প্রতিটি বাক্যে আবেগ ও ছন্দ থাকবে।',
+  guide: 'ব্যবহারিক পথনির্দেশ দাও — পরের পদক্ষেপ কী হবে সেটা বলো।',
+  poem: 'শুধু একটি ৪-৬ লাইনের বাংলা কবিতা লিখো। অন্য কিছু লিখো না।'
+};
+
+const MOOD_EMOJIS = ['😌','😌','🙂','😐','😔','😢','💔','😤','😡','🤬'];
+const MOOD_WORDS = ['শান্ত','শান্ত','ঠিকঠাক','নিরপেক্ষ','দু:খী','কষ্টে','ভাঙা','রাগান্বিত','খুব রাগী','ক্রুদ্ধ'];
+const CAT_BC = { Love: 'bl', Secret: 'bs', Regret: 'br', Fear: 'bf', Joy: 'bj' };
+const CAT_LBL = { Love: '💔 ভালোবাসা', Secret: '🤫 রহস্য', Regret: '😔 অনুতাপ', Fear: '😰 ভয়', Joy: '✨ আনন্দ' };
+const CAT_COLOR = { Love: '#e07070', Secret: '#a080e0', Regret: '#60c0e0', Fear: '#e0b040', Joy: '#60e090' };
+const SIN_LVL = ['😇 ছোট পাপ', '😬 মাঝারি পাপ', '😈 মহাপাপ 😈'];
+
+const DAILY_QS = [
+  'আজ কি এমন কিছু করেছ যা তুমি পরে মনে রাখতে চাও?',
+  'আজকের কোন মুহূর্তটা তোমার মনে সবচেয়ে বেশি আঘাত করেছে?',
+  'এমন কাকে মিস করছ যাকে আজ হয়তো বলতে পারোনি?',
+  'আজ যদি একটাই কথা বলার সুযোগ পেতে, কাকে কী বলতে?',
+  'তোমার কোন স্বপ্নটা আজও অপূর্ণ, যেটা নিয়ে তুমি আর ভাবো না?',
+  'আজ নিজেকে কতটা ভালোবেসেছ?',
+  'এমন কোন সত্যি আছে যা তুমি বলতে চাও কিন্তু পারছ না?'
+];
+
+// ══ CURSOR ══
+const $cur = document.getElementById('cur');
+const $ring = document.getElementById('cur-ring');
+const $spot = document.getElementById('spotlight');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  $cur.style.left = (mx - 3) + 'px';
+  $cur.style.top = (my - 3) + 'px';
+  $spot.style.setProperty('--mx', mx + 'px');
+  $spot.style.setProperty('--my', my + 'px');
+  if (Math.random() > .78) spawnSpark(mx, my);
+});
+function animRing() { rx += (mx - rx - 15) * .13; ry += (my - ry - 15) * .13; $ring.style.left = rx + 'px'; $ring.style.top = ry + 'px'; requestAnimationFrame(animRing); }
+animRing();
+function spawnSpark(x, y) {
+  const s = document.createElement('div'); s.className = 'spark';
+  const ang = Math.random() * 360, d = 12 + Math.random() * 22;
+  s.style.cssText = `left:${x-2}px;top:${y-2}px;background:${Math.random()>.5?'#C9A84C':'#e07820'};--sx:${Math.cos(ang)*d}px;--sy:${Math.sin(ang)*d}px`;
+  document.body.appendChild(s); setTimeout(() => s.remove(), 560);
+}
+document.addEventListener('mousedown', () => { $cur.style.width = '13px'; $cur.style.height = '13px'; });
+document.addEventListener('mouseup', () => { $cur.style.width = '7px'; $cur.style.height = '7px'; });
+
+// ══ LOADER ══
+const TW_PHRASES = ['তোমার স্বীকারোক্তি অপেক্ষা করছে...', 'মনের দরজা খুলছে...', 'আলো জ্বলছে তোমার জন্য...'];
+let twI = 0, twC = 0;
+const $ldtw = document.getElementById('ld-tw');
+function typeLoad() {
+  const ph = TW_PHRASES[twI];
+  if (twC < ph.length) { $ldtw.textContent += ph[twC++]; setTimeout(typeLoad, 58); }
+  else setTimeout(() => { $ldtw.textContent = ''; twC = 0; twI = (twI + 1) % TW_PHRASES.length; setTimeout(typeLoad, 350); }, 1300);
+}
+
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('lf').classList.add('lit');
+    document.getElementById('ld-title').style.opacity = '1';
+    typeLoad();
+    document.getElementById('ld-fill').style.width = '100%';
+  }, 250);
+  setTimeout(() => {
+    const $ld = document.getElementById('loader'); $ld.classList.add('fade');
+    setTimeout(() => $ld.style.display = 'none', 900);
+    document.getElementById('door').classList.add('open');
+    setTimeout(() => { document.getElementById('door').style.display = 'none'; }, 2600);
+    initAll();
+  }, 3600);
+});
+
+// ══ STARS ══
+function initStars() {
+  const c = document.getElementById('stars-c');
+  c.width = window.innerWidth; c.height = window.innerHeight;
+  const ctx = c.getContext('2d');
+  const stars = Array.from({ length: 220 }, () => ({
+    x: Math.random() * c.width, y: Math.random() * c.height * .88,
+    r: Math.random() * 1.4 + .25,
+    a: Math.random(), da: (.005 + Math.random() * .009) * (Math.random() > .5 ? 1 : -1)
+  }));
+  (function draw() {
+    ctx.clearRect(0, 0, c.width, c.height);
+    stars.forEach(s => {
+      s.a += s.da; if (s.a > 1 || s.a < 0) s.da *= -1;
+      ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(245,240,232,${s.a * .65})`; ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  })();
+}
+
+// ══ RAIN ══
+function initRain() {
+  const c = document.getElementById('rain-c');
+  c.width = window.innerWidth; c.height = window.innerHeight;
+  const ctx = c.getContext('2d');
+  const drops = Array.from({ length: 130 }, () => ({
+    x: Math.random() * c.width, y: Math.random() * c.height,
+    l: 10 + Math.random() * 18, s: 4 + Math.random() * 5
+  }));
+  (function draw() {
+    ctx.clearRect(0, 0, c.width, c.height);
+    ctx.strokeStyle = 'rgba(180,200,220,0.16)'; ctx.lineWidth = .75;
+    drops.forEach(d => {
+      ctx.beginPath(); ctx.moveTo(d.x, d.y); ctx.lineTo(d.x - d.l * .14, d.y + d.l); ctx.stroke();
+      d.y += d.s; d.x -= d.s * .14;
+      if (d.y > c.height) { d.y = -20; d.x = Math.random() * c.width; }
+    });
+    requestAnimationFrame(draw);
+  })();
+}
+
+// ══ CANDLES ══
+function initCandles() {
+  const row = document.getElementById('candle-row');
+  const cfgs = [
+    { fw: 15, fh: 32, bh: 58 }, { fw: 12, fh: 27, bh: 82 }, { fw: 17, fh: 36, bh: 46 },
+    { fw: 11, fh: 23, bh: 72 }, { fw: 14, fh: 33, bh: 62 }, { fw: 10, fh: 21, bh: 50 }
+  ];
+  cfgs.forEach((c) => {
+    const fd = (1.4 + Math.random() * .9).toFixed(1), fd2 = (Math.random() * 2.2).toFixed(1);
+    const w = document.createElement('div'); w.className = 'cw';
+    w.innerHTML = `
+      <div class="cf" style="width:${c.fw}px;height:${c.fh}px;background:radial-gradient(ellipse at 50% 72%,#fff 0%,#ffb84a 32%,#e0720c 68%,transparent 100%);box-shadow:0 0 18px #ffb84a,0 0 40px rgba(255,140,40,.38);--fd:${fd}s;--fd2:${fd2}s"></div>
+      <div style="width:2px;height:8px;background:#bbb;margin-bottom:-1px"></div>
+      <div class="cb" style="width:${c.fw - 2}px;height:${c.bh}px"></div>
+      <div class="ca" style="width:${c.fw * 6}px;height:${c.fw * 5}px;bottom:${c.bh * .1}px;--fd:${fd}s;--fd2:${fd2}s"></div>
+    `;
+    row.appendChild(w);
+  });
+}
+
+// ══ HERO TYPEWRITER ══
+const TAGS = ['যা বলা যায় না কাউকে,\nবলো এখানে — নামহীন, নিরাপদ।', 'প্রতিটি রাতের আঁধারে\nএকটি সত্য মুক্তি খোঁজে।', 'তোমার কথা কেউ শুনবে —\nবিচার ছাড়া, নাম ছাড়া।', 'একা থাকা মানে একাকী নয় —\nএখানে সবাই একা, একসাথে।'];
+let ti = 0, tc = 0, tf = true;
+const $htag = document.getElementById('htag');
+function animTag() {
+  const t = TAGS[ti];
+  if (tf) { $htag.textContent = t.slice(0, ++tc); if (tc >= t.length) { tf = false; setTimeout(animTag, 2800); return; } }
+  else { $htag.textContent = t.slice(0, --tc); if (tc <= 0) { tf = true; ti = (ti + 1) % TAGS.length; } }
+  setTimeout(animTag, tf ? 55 : 28);
+}
+
+// ══ STATS COUNTER ══
+function countUp(el, target, dur = 2300) {
+  const step = target / 72;
+  let n = 0;
+  const t = setInterval(() => { n += step; if (n >= target) { n = target; clearInterval(t); } el.textContent = Math.floor(n).toLocaleString('bn-BD'); }, dur / 72);
+}
+
+// ══ MOOD ══
+function onMood(v) { document.getElementById('mood-em').textContent = MOOD_EMOJIS[Math.min(Math.floor(v / 11), 9)]; }
+
+// ══ WRITE MODE ══
+function setWMode(m, btn) {
+  S.wmode = m;
+  document.querySelectorAll('#wmodes .pill').forEach(b => b.classList.remove('on')); btn.classList.add('on');
+  const lh = document.getElementById('ltr-hdr'), ta = document.getElementById('ctext');
+  if (m === 'letter') { lh.style.display = 'block'; document.getElementById('ltr-to').textContent = 'অতীত আমি'; ta.placeholder = 'প্রিয় অতীত আমি,\n\nআজ তোমাকে বলতে চাই...'; }
+  else if (m === 'template') { lh.style.display = 'none'; ta.value = 'আমি স্বীকার করছি যে '; ta.placeholder = ''; }
+  else if (m === 'future') { lh.style.display = 'block'; document.getElementById('ltr-to').textContent = 'ভবিষ্যৎ আমি'; ta.placeholder = 'প্রিয় ভবিষ্যৎ আমি,\n\nআজ থেকে কিছুদিন পর যখন এটা পড়বে...'; }
+  else { lh.style.display = 'none'; ta.placeholder = 'লিখো তোমার কথা...'; }
+}
+
+// ══ TEXT INPUT ══
+const EMO_MAP = { love: ['ভালো','প্রেম','ভালোবাস','মিস','ভুলতে','প্রিয়'], sad: ['কষ্ট','দু:খ','কাঁদি','ভাঙ','একা','ব্যথা'], fear: ['ভয়','ভীত','আতঙ্ক'], joy: ['আনন্দ','খুশি','হাসি','সুখ'], anger: ['রাগ','ক্ষোভ','বিরক্ত'] };
+const EMO_IC = { love: '💔', sad: '😢', fear: '😰', joy: '✨', anger: '😤', default: '✏️' };
+function onText() {
+  const t = document.getElementById('ctext').value;
+  document.getElementById('cc').textContent = t.length;
+  let d = 'default';
+  for (const [k, ws] of Object.entries(EMO_MAP)) { if (ws.some(w => t.includes(w))) { d = k; break; } }
+  document.getElementById('emod').textContent = EMO_IC[d];
+}
+
+// ══ PILL GROUPS ══
+function setupPills(sel, key) {
+  document.querySelectorAll(sel + ' .pill').forEach(b => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll(sel + ' .pill').forEach(x => x.classList.remove('on'));
+      b.classList.add('on'); S[key] = b.dataset[key] || b.dataset.cat || b.dataset.priv || b.dataset.burn || b.dataset.rm || b.dataset.tc;
+    });
+  });
+}
+function setAchar(el) { document.querySelectorAll('.ach').forEach(x => x.classList.remove('on')); el.classList.add('on'); S.char = el.dataset.char; }
+
+// ══ SUBMIT CONFESSION ══
+async function submitConf() {
+  const text = document.getElementById('ctext').value.trim();
+  if (!text) { showToast('কিছু লিখো প্রথমে ✦'); return; }
+  if (text.length < 5) { showToast('একটু বিস্তারিত লিখো...'); return; }
+  const btn = document.getElementById('sbtn');
+  btn.innerHTML = '<div class="ld"><span></span><span></span><span></span></div> শুনছি...'; btn.disabled = true;
+  document.getElementById('aibox').classList.remove('show');
+
+  const p = PERSONAS[S.char];
+  const moodV = document.getElementById('mood').value;
+  const moodW = MOOD_WORDS[Math.min(Math.floor(moodV / 11), 9)];
+  const isPoem = (document.querySelector('#rmodes .pill.on') || {}).dataset?.rm === 'poem';
+  const rm = (document.querySelector('#rmodes .pill.on') || {}).dataset?.rm || 'normal';
+  const cat = (document.querySelector('#cats .pill.on') || {}).dataset?.cat || 'Secret';
+
+  const sys = `${p.p} ${RESP_PROMPTS[rm]}
+মানসিক অবস্থা: ${moodW}। বিভাগ: ${CAT_LBL[cat] || cat}।
+${isPoem ? 'শুধু কবিতা।' : 'বাংলায় উত্তর দাও। ৩ বাক্যের বেশি নয়। কখনো বিচার করবে না।'}`;
+
+  try {
+    const r = await fetch('https://api.anthropic.com/v1/messages', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 1000, system: sys, messages: [{ role: 'user', content: text }] }) });
+    const d = await r.json();
+    const reply = d.content?.[0]?.text || 'তোমার কথা শুনলাম। তুমি একা নও।';
+
+    document.getElementById('ai-ic').textContent = p.ic;
+    document.getElementById('ai-lb').textContent = p.name + ' বলছে';
+    if (isPoem) { document.getElementById('ai-txt').textContent = ''; document.getElementById('ai-poem').textContent = reply; document.getElementById('ai-poem').style.display = 'block'; }
+    else { document.getElementById('ai-txt').textContent = reply; document.getElementById('ai-poem').style.display = 'none'; }
+
+    document.getElementById('sin-v').textContent = SIN_LVL[text.length > 200 ? 2 : text.length > 80 ? 1 : 0];
+    document.getElementById('aibox').classList.add('show');
+    S.chatHist = [{ role: 'user', content: text }, { role: 'assistant', content: reply }];
+
+    // Save
+    const alias = document.getElementById('alias').value.trim() || 'একজন নামহীন';
+    const priv = (document.querySelector('#privs .pill.on') || {}).dataset?.priv || 'all';
+    const newC = { id: Date.now(), cat, text, alias, time: 'এইমাত্র', likes: 0, hearts: 0, same: 0, threads: [] };
+
+    if (priv !== 'ai') { S.confs.unshift(newC); renderWall(); }
+    S.myConfs.unshift({ ...newC, aiReply: reply, moodV, cat }); renderDiary();
+    saveData(); updateStreak();
+    spawnPetals(); showToast('তোমার স্বীকারোক্তি মুক্তি পেয়েছে 🕊️');
+    document.getElementById('ctext').value = ''; document.getElementById('cc').textContent = '০'; document.getElementById('emod').textContent = '✏️';
+    S.shareConf = newC;
+  } catch (e) {
+    document.getElementById('ai-txt').textContent = 'তোমার কথা শুনেছি। প্রতিটি অনুভূতি সত্য, প্রতিটি কষ্ট মানবিক। তুমি একা নও।';
+    document.getElementById('ai-poem').style.display = 'none';
+    document.getElementById('aibox').classList.add('show');
+    showToast('স্বীকারোক্তি রাখা হয়েছে ✦');
+    const alias = document.getElementById('alias').value.trim() || 'একজন নামহীন';
+    const cat2 = (document.querySelector('#cats .pill.on') || {}).dataset?.cat || 'Secret';
+    const newC2 = { id: Date.now(), cat: cat2, text, alias, time: 'এইমাত্র', likes: 0, hearts: 0, same: 0, threads: [] };
+    S.confs.unshift(newC2); S.myConfs.unshift({ ...newC2 }); renderWall(); renderDiary(); saveData(); updateStreak();
+    document.getElementById('ctext').value = ''; document.getElementById('cc').textContent = '০';
+    S.shareConf = newC2;
+  }
+  btn.innerHTML = 'আবার বলো &nbsp;✦'; btn.disabled = false;
+}
+
+// ══ MINI CHAT ══
+async function mcSend() {
+  const inp = document.getElementById('mc-i'); const t = inp.value.trim(); if (!t) return; inp.value = '';
+  S.chatHist.push({ role: 'user', content: t });
+  const ld = document.createElement('div'); ld.className = 'ld'; ld.innerHTML = '<span></span><span></span><span></span>';
+  const body = document.getElementById('ai-txt'); body.textContent = ''; body.appendChild(ld);
+  try {
+    const r = await fetch('https://api.anthropic.com/v1/messages', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 500, system: PERSONAS[S.char].p + ' বাংলায় সংক্ষেপে উত্তর দাও।', messages: S.chatHist }) });
+    const d = await r.json(); const reply = d.content?.[0]?.text || '...';
+    ld.remove(); body.textContent = reply; S.chatHist.push({ role: 'assistant', content: reply });
+  } catch { ld.remove(); body.textContent = 'একটু পরে আবার চেষ্টা করো।'; }
+}
+
+// ══ HEAL SLIDER ══
+function onHeal(v) { document.getElementById('healv').textContent = v + '/১০'; }
+
+// ══ WALL RENDER ══
+function renderWall() {
+  const q = S.search.toLowerCase();
+  let items = S.filter === 'all' ? S.confs : S.confs.filter(c => c.cat === S.filter);
+  if (q) items = items.filter(c => c.text.includes(q) || c.alias.includes(q));
+  const gv = document.getElementById('gv');
+  gv.innerHTML = '';
+  items.forEach((c, i) => {
+    const el = document.createElement('div'); el.className = 'cc';
+    el.style.animationDelay = (i * .06) + 's';
+    el.style.animation = `fadeUp .4s ${i * .06}s ease both`;
+    el.style.opacity = '0';
+    el.innerHTML = `
+      ${c.cotd ? '<div class="cotd">👑 আজকের সেরা</div>' : ''}
+      <div class="cc-top"><span class="cbadge ${CAT_BC[c.cat] || 'bs'}">${CAT_LBL[c.cat] || c.cat}</span><span class="cc-alias">${c.alias}</span></div>
+      <p class="cc-txt">"${c.text}"</p>
+      <div class="cc-ft">
+        <span class="cc-time">${c.time}</span>
+        <div class="cc-reacts">
+          <button class="rbt" onclick="react(this,'l',${c.id})"><span>🕯️</span><span class="rn">${c.likes}</span></button>
+          <button class="rbt" onclick="react(this,'h',${c.id})"><span>🤍</span><span class="rn">${c.hearts}</span></button>
+          <button class="rbt" onclick="same(this,${c.id})" title="আমিও একই অনুভব করি"><span>🫂</span><span class="rn">${c.same}</span></button>
+          <button class="rbt" onclick="openShare(${c.id})" title="শেয়ার করো"><span>🌸</span></button>
+          <button class="rbt" onclick="reportConf(${c.id})" title="রিপোর্ট"><span>⚑</span></button>
+        </div>
+      </div>
+      <button class="thread-btn" onclick="toggleThread(this)">💬 thread যোগ করো</button>
+      <div class="thread-area">
+        <textarea class="thread-inp" placeholder="এই স্বীকারোক্তিতে তোমার কথা যোগ করো..." rows="2"></textarea>
+        <button class="thread-sbtn" onclick="addThread(this,${c.id})">যোগ করো ✦</button>
+        <div class="thread-list" id="tl-${c.id}">${(c.threads || []).map(t => `<div class="thread-item">"${t}"</div>`).join('')}</div>
+      </div>
+    `;
+    gv.appendChild(el);
+  });
+  if (items.length === 0) { gv.innerHTML = '<div style="text-align:center;padding:3rem;color:var(--muted);font-family:var(--fcormo);font-style:italic">এই বিভাগে কোনো স্বীকারোক্তি নেই এখনো।</div>'; }
+  renderHeatmap();
+}
+
+function react(btn, type, id) {
+  const n = btn.querySelector('.rn'); n.textContent = parseInt(n.textContent) + 1;
+  btn.style.color = 'var(--gold)'; btn.style.opacity = '1';
+  const c = S.confs.find(x => x.id === id); if (c) { type === 'l' ? c.likes++ : c.hearts++; }
+  showToast(type === 'l' ? '🕯️ মোমবাতি জ্বালানো হয়েছে' : '🤍 ভালোবাসা পাঠানো হয়েছে');
+}
+function same(btn, id) {
+  const n = btn.querySelector('.rn'); n.textContent = parseInt(n.textContent) + 1;
+  btn.style.color = '#60c0e0'; btn.style.opacity = '1';
+  showToast('🫂 তুমি একা নও — আরেকজনও একই অনুভব করছে');
+}
+function reportConf(id) { showToast('⚑ রিপোর্ট করা হয়েছে — পর্যালোচনা করা হবে'); }
+function toggleThread(btn) { btn.nextElementSibling.classList.toggle('open'); }
+function addThread(btn, id) {
+  const inp = btn.previousElementSibling; const t = inp.value.trim(); if (!t) return;
+  const c = S.confs.find(x => x.id === id); if (c) c.threads.push(t);
+  const tl = document.getElementById('tl-' + id);
+  const d = document.createElement('div'); d.className = 'thread-item'; d.textContent = '"' + t + '"'; tl.appendChild(d);
+  inp.value = ''; showToast('💬 thread যোগ হয়েছে');
+}
+
+// ══ FILTER / SEARCH ══
+function wFilter(btn, cat) {
+  document.querySelectorAll('.fb').forEach(b => b.classList.remove('on')); btn.classList.add('on'); S.filter = cat; renderWall();
+}
+function onSearch() { S.search = document.getElementById('search-i').value; renderWall(); }
+function randomConf() {
+  const r = S.confs[Math.floor(Math.random() * S.confs.length)]; if (!r) return;
+  document.querySelectorAll('.fb').forEach(b => b.classList.remove('on')); document.querySelector('.fb').classList.add('on');
+  S.filter = 'all'; renderWall(); showToast('🎲 এলোমেলো স্বীকারোক্তি');
+}
+
+// ══ VIEW TOGGLE ══
+function setView(v, btn) {
+  S.view = v; document.querySelectorAll('.vt').forEach(b => b.classList.remove('on')); btn.classList.add('on');
+  const gv = document.getElementById('gv'), cv = document.getElementById('cv');
+  if (v === 'grid') { gv.style.display = 'grid'; cv.style.display = 'none'; }
+  else { gv.style.display = 'none'; cv.style.display = 'block'; renderConst(); }
+}
+
+// ══ CONSTELLATION ══
+function renderConst() {
+  const c = document.getElementById('const-c'); c.width = c.offsetWidth; c.height = 500;
+  const ctx = c.getContext('2d');
+  const items = S.filter === 'all' ? S.confs : S.confs.filter(x => x.cat === S.filter);
+  const positions = items.map(ci => ({ x: 80 + Math.random() * (c.width - 160), y: 60 + Math.random() * 380, conf: ci }));
+  ctx.clearRect(0, 0, c.width, c.height);
+  for (let i = 0; i < positions.length - 1; i++) {
+    const a = positions[i], b = positions[i + 1], d = Math.hypot(b.x - a.x, b.y - a.y);
+    if (d < 180) { ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.strokeStyle = 'rgba(201,168,76,.07)'; ctx.lineWidth = 1; ctx.stroke(); }
+  }
+  positions.forEach(p => {
+    const col = CAT_COLOR[p.conf.cat] || '#c9a84c', r = 3 + Math.min((p.conf.likes + p.conf.hearts) / 30, 5);
+    ctx.beginPath(); ctx.arc(p.x, p.y, r + 6, 0, Math.PI * 2); ctx.fillStyle = col.replace(')', ',0.1)').replace('rgb', 'rgba').replace('#', 'rgba('); ctx.fill();
+    ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, Math.PI * 2); ctx.fillStyle = col; ctx.fill();
+    ctx.fillStyle = 'rgba(245,240,232,0.35)'; ctx.font = '10px Cinzel,serif'; ctx.textAlign = 'center';
+    ctx.fillText(p.conf.alias.slice(0, 10), p.x, p.y - r - 9);
+  });
+  c.onclick = e => {
+    const rect = c.getBoundingClientRect(), cx = e.clientX - rect.left, cy = e.clientY - rect.top;
+    const hit = positions.find(p => Math.hypot(p.x - cx, p.y - cy) < 20);
+    if (hit) showToast('"' + hit.conf.text.slice(0, 40) + '..." — ' + hit.conf.alias);
+  };
+}
+
+// ══ HEATMAP ══
+function renderHeatmap() {
+  const bars = document.getElementById('hm-bars'); bars.innerHTML = '';
+  const cats = ['Love', 'Secret', 'Regret', 'Fear', 'Joy'];
+  const labels = { Love: '💔 ভালোবাসা', Secret: '🤫 রহস্য', Regret: '😔 অনুতাপ', Fear: '😰 ভয়', Joy: '✨ আনন্দ' };
+  const counts = cats.map(cat => S.confs.filter(c => c.cat === cat).length);
+  const max = Math.max(...counts, 1);
+  const colors = { Love: 'linear-gradient(to right,#8b0000,#e07070)', Secret: 'linear-gradient(to right,#2d1b69,#a080e0)', Regret: 'linear-gradient(to right,#1b2a4a,#60c0e0)', Fear: 'linear-gradient(to right,#6a5000,#e0b040)', Joy: 'linear-gradient(to right,#145028,#60e090)' };
+  cats.forEach((cat, i) => {
+    const pct = Math.round(counts[i] / (S.confs.length || 1) * 100);
+    const row = document.createElement('div'); row.className = 'hm-row';
+    row.innerHTML = `<span class="hm-lbl">${labels[cat]}</span><div class="hm-bar-w"><div class="hm-bar-f" style="width:0%;background:${colors[cat]}" data-w="${counts[i] / max * 100}"></div></div><span class="hm-pct">${pct}%</span>`;
+    bars.appendChild(row);
+  });
+  setTimeout(() => { document.querySelectorAll('.hm-bar-f').forEach(b => { b.style.width = b.dataset.w + '%'; }); }, 100);
+}
+
+// ══ DIARY ══
+function renderDiary() {
+  const tl = document.getElementById('diary-tl');
+  if (S.myConfs.length === 0) { tl.innerHTML = '<div class="diary-empty">তুমি এখনো কোনো স্বীকারোক্তি করোনি।<br>প্রথম স্বীকারোক্তি দিয়ে শুরু করো।</div>'; renderPersona(); return; }
+  tl.innerHTML = '';
+  S.myConfs.slice(0, 20).forEach((c, i) => {
+    const item = document.createElement('div'); item.className = 'dtl-item';
+    item.innerHTML = `
+      <div class="dtl-dot">${['💔','🤫','😔','😰','✨'][['Love','Secret','Regret','Fear','Joy'].indexOf(c.cat)] || '✦'}</div>
+      <div class="dtl-c">
+        <button class="dtl-del" onclick="deleteMyConf(${c.id},this)" title="মুছে দাও">✕</button>
+        <div class="dtl-top"><span class="dtl-cat">${CAT_LBL[c.cat] || c.cat}</span><span class="dtl-time">${c.time}</span></div>
+        <p class="dtl-txt">"${c.text}"</p>
+        ${c.aiReply ? '<p style="margin-top:.7rem;font-size:.88rem;color:var(--muted);font-style:italic;font-family:var(--fcormo)">AI: "' + c.aiReply.slice(0, 80) + '..."</p>' : ''}
+      </div>
+    `;
+    tl.appendChild(item);
+  });
+  renderPersona();
+}
+
+function deleteMyConf(id, btn) {
+  S.myConfs = S.myConfs.filter(c => c.id !== id); saveData(); renderDiary(); showToast('স্বীকারোক্তি মুছে গেছে 🔥');
+}
+
+function renderPersona() {
+  const box = document.getElementById('persona-box');
+  if (S.myConfs.length < 3) { box.innerHTML = ''; return; }
+  const catCounts = {};
+  S.myConfs.forEach(c => { catCounts[c.cat] = (catCounts[c.cat] || 0) + 1; });
+  const top = Object.entries(catCounts).sort((a, b) => b[1] - a[1])[0]?.[0];
+  const personas = {
+    Love: { ic: '🌹', t: 'হৃদয়ের যাত্রী', d: 'তুমি ভালোবাসায় বিশ্বাস করো — ব্যথা পেয়েও। তোমার হৃদয় বড়, আর সেটাই তোমার শক্তি।' },
+    Secret: { ic: '🌙', t: 'নীরব স্বপ্নদ্রষ্টা', d: 'তুমি অনেক কিছু বুকে রাখো যা কাউকে বলো না। ভেতরে একটা গভীর জগৎ আছে — সেটাই তোমার রহস্য।' },
+    Regret: { ic: '🍂', t: 'অনুভবী আত্মা', d: 'তুমি অতীত নিয়ে ভাবো — কারণ তুমি সত্যিই যত্নশীল। এই সংবেদনশীলতা তোমাকে মানবিক করে।' },
+    Fear: { ic: '⚡', t: 'সাহসী লড়াকু', d: 'ভয় স্বীকার করা সাহসের কাজ। তুমি প্রতিদিন ভয়ের সাথে লড়ছ — এটাই তোমার বীরত্ব।' },
+    Joy: { ic: '✨', t: 'আলোর সন্ধানী', d: 'তুমি ছোট্ট আনন্দে আনন্দিত হও — এই দৃষ্টিভঙ্গিই জীবনকে সুন্দর করে।' }
+  };
+  const pr = personas[top] || personas.Love;
+  box.innerHTML = `<div class="persona-card"><div class="persona-icon">${pr.ic}</div><div class="persona-title">তুমি একজন "${pr.t}"</div><p class="persona-desc">${pr.d}</p></div>`;
+}
+
+// ══ TIME CAPSULE ══
+function saveCapsule() {
+  const txt = document.getElementById('tc-txt').value.trim(); if (!txt) { showToast('কিছু লিখো প্রথমে'); return; }
+  const days = parseInt(document.querySelector('#tc-when .pill.on')?.dataset?.tc || '30');
+  const unlock = new Date(Date.now() + days * 86400000);
+  const cap = { id: Date.now(), txt, days, unlock: unlock.toISOString(), locked: true };
+  S.capsules.unshift(cap); saveData(); renderCapsules();
+  document.getElementById('tc-txt').value = ''; showToast('⏳ টাইম ক্যাপসুল সিল করা হয়েছে!');
+}
+
+function renderCapsules() {
+  const items = document.getElementById('tc-items'); items.innerHTML = '';
+  if (S.capsules.length === 0) { items.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--muted);font-style:italic;font-family:var(--fcormo)">এখনো কোনো টাইম ক্যাপসুল নেই।</div>'; return; }
+  S.capsules.forEach(c => {
+    const unlock = new Date(c.unlock), now = new Date(), unlocked = now >= unlock;
+    const item = document.createElement('div'); item.className = 'tc-item';
+    const daysLeft = Math.ceil((unlock - now) / 86400000);
+    item.innerHTML = `
+      <span class="tc-icon">${unlocked ? '📖' : '🔒'}</span>
+      <div class="tc-info">
+        <div class="tc-date">${unlocked ? '✅ খোলার সময় হয়েছে' : `⏳ ${daysLeft} দিন বাকি — ${unlock.toLocaleDateString('bn-BD')}`}</div>
+        <div class="tc-txt">${unlocked ? '"' + c.txt + '"' : '🔒 এখনো সিল করা আছে...'}</div>
+      </div>
+      <span class="tc-lock">${unlocked ? '📖' : '🔐'}</span>
+    `;
+    items.appendChild(item);
+  });
+}
+
+// ══ DAILY QUESTION ══
+const todayQ = DAILY_QS[new Date().getDay()];
+document.getElementById('dq-q').textContent = todayQ;
+function submitDQ() {
+  const ans = document.getElementById('dq-ans').value.trim(); if (!ans) return;
+  showToast('✨ তোমার উত্তর রাখা হয়েছে');
+  document.getElementById('dq-ans').value = '';
+  const b = document.querySelector('.dq-btn'); b.textContent = '✓ উত্তর দেওয়া হয়েছে'; b.disabled = true;
+}
+
+// ══ WEEKLY REPORT ══
+function renderReport() {
+  const c = document.getElementById('report-c'); c.width = c.offsetWidth; c.height = 200;
+  const ctx = c.getContext('2d');
+  const days = ['সোম', 'মঙ্গল', 'বুধ', 'বৃহস্পতি', 'শুক্র', 'শনি', 'রবি'];
+  const vals = days.map(() => 10 + Math.floor(Math.random() * 80));
+  const maxV = Math.max(...vals); const w = c.width; const h = c.height;
+  const bw = (w - 80) / days.length; const pad = 40;
+  ctx.clearRect(0, 0, w, h);
+  days.forEach((d, i) => {
+    const bh = ((vals[i] / maxV) * (h - 60)); const x = pad + i * bw + bw * .15; const y = h - 30 - bh;
+    const g = ctx.createLinearGradient(0, y, 0, h - 30);
+    g.addColorStop(0, 'rgba(201,168,76,.7)'); g.addColorStop(1, 'rgba(139,40,0,.2)');
+    ctx.fillStyle = g; ctx.fillRect(x, y, bw * .7, bh);
+    ctx.fillStyle = 'rgba(245,240,232,0.35)'; ctx.font = '11px Cinzel,serif'; ctx.textAlign = 'center'; ctx.fillText(d, x + bw * .35, h - 10);
+    ctx.fillStyle = 'rgba(201,168,76,0.6)'; ctx.fillText(vals[i], x + bw * .35, y - 5);
+  });
+  const ins = document.getElementById('report-ins'); ins.innerHTML = '';
+  const insData = [
+    { ic: '📊', val: S.confs.length + SAMPLES.length, key: 'মোট স্বীকারোক্তি' },
+    { ic: '💔', val: Math.round((S.confs.filter(c => c.cat === 'Love').length + 3) / (S.confs.length + SAMPLES.length) * 100) + '%', key: 'ভালোবাসার গল্প' },
+    { ic: '🕯️', val: S.confs.reduce((a, c) => a + c.likes, 0) + 489, key: 'মোমবাতি জ্বলেছে' },
+    { ic: '🌙', val: '৩ দিন', key: 'তোমার streak' }
+  ];
+  insData.forEach(i => {
+    const d = document.createElement('div'); d.className = 'ri';
+    d.innerHTML = `<div class="ri-icon">${i.ic}</div><div class="ri-val">${i.val}</div><div class="ri-key">${i.key}</div>`;
+    ins.appendChild(d);
+  });
+}
+
+// ══ SHARE CARD ══
+function openShare(id) {
+  const c = S.confs.find(x => x.id === id) || SAMPLES.find(x => x.id === id);
+  if (!c) return; S.shareConf = c;
+  document.getElementById('share-modal').classList.add('show');
+  drawShareCard(c);
+}
+function drawShareCard(c) {
+  const canvas = document.getElementById('share-c');
+  const ctx = canvas.getContext('2d');
+  canvas.width = 420; canvas.height = 240;
+  ctx.fillStyle = '#110d0b'; ctx.fillRect(0, 0, 420, 240);
+  const g = ctx.createLinearGradient(0, 0, 420, 240);
+  g.addColorStop(0, 'rgba(201,168,76,.06)'); g.addColorStop(1, 'rgba(139,0,0,.06)');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, 420, 240);
+  ctx.strokeStyle = 'rgba(201,168,76,.3)'; ctx.lineWidth = 1; ctx.strokeRect(10, 10, 400, 220);
+  ctx.fillStyle = '#C9A84C'; ctx.font = 'bold 14px serif'; ctx.textAlign = 'center'; ctx.fillText('✦ Digital Confession ✦', 210, 38);
+  ctx.fillStyle = 'rgba(245,240,232,.75)'; ctx.font = 'italic 13px serif'; ctx.textAlign = 'center';
+  const words = ('"' + c.text + '"').split(' '); let line = '', lines = []; const maxW = 360;
+  for (const w of words) { const test = line + w + ' '; if (ctx.measureText(test).width > maxW && line !== '') { lines.push(line); line = w + ' '; } else line = test; }
+  lines.push(line);
+  lines.slice(0, 5).forEach((l, i) => ctx.fillText(l.trim(), 210, 75 + i * 22));
+  ctx.fillStyle = 'rgba(139,115,85,.5)'; ctx.font = '11px serif'; ctx.fillText('— ' + c.alias, 210, 185);
+  ctx.fillStyle = 'rgba(201,168,76,.4)'; ctx.font = '10px serif'; ctx.fillText(CAT_LBL[c.cat] || c.cat, 210, 210);
+}
+function downloadCard() {
+  const c = document.getElementById('share-c'); const a = document.createElement('a');
+  a.download = 'confession.png'; a.href = c.toDataURL(); a.click(); showToast('🌸 কার্ড ডাউনলোড হচ্ছে');
+}
+function copyConf() {
+  if (!S.shareConf) return;
+  navigator.clipboard?.writeText('"' + S.shareConf.text + '" — ' + S.shareConf.alias + '\n\n✦ Digital Confession').then(() => showToast('📋 কপি হয়েছে'));
+}
+function closeShare() { document.getElementById('share-modal').classList.remove('show'); }
+
+// ══ PETALS ══
+function spawnPetals() {
+  const em = ['🌸', '🌹', '🌺', '🌷', '✨', '⭐', '🕊️'];
+  for (let i = 0; i < 22; i++) {
+    setTimeout(() => {
+      const p = document.createElement('div'); p.className = 'petal';
+      p.textContent = em[Math.floor(Math.random() * em.length)];
+      p.style.cssText = `--px:${8 + Math.random() * 84}%;--pd:${2.2 + Math.random() * 2.8}s;--pde:${Math.random() * .9}s;--pdx:${(Math.random() - .5) * 160}px;--pr:${Math.random() > .5 ? 400 : -400}deg`;
+      document.body.appendChild(p);
+      const ttl = (parseFloat(p.style.getPropertyValue('--pd')) + parseFloat(p.style.getPropertyValue('--pde')) + .5) * 1000;
+      setTimeout(() => p.remove(), ttl);
+    }, i * 85);
+  }
+}
+
+// ══ STREAK ══
+function updateStreak() {
+  const today = new Date().toDateString();
+  if (S.lastConfDate === today) return;
+  if (S.lastConfDate === new Date(Date.now() - 86400000).toDateString()) S.streak++;
+  else S.streak = 1;
+  S.lastConfDate = today; saveData();
+  document.getElementById('w-streak').textContent = S.streak + ' দিন';
+  if (S.streak >= 3) showToast('🔥 ' + S.streak + ' দিনের streak!');
+}
+
+// ══ STORAGE ══
+function saveData() {
+  try {
+    localStorage.setItem('dc_myConfs', JSON.stringify(S.myConfs.slice(0, 50)));
+    localStorage.setItem('dc_capsules', JSON.stringify(S.capsules));
+    localStorage.setItem('dc_streak', S.streak);
+    localStorage.setItem('dc_lastDate', S.lastConfDate || '');
+  } catch (e) {}
+}
+function loadData() {
+  try {
+    S.myConfs = JSON.parse(localStorage.getItem('dc_myConfs') || '[]');
+    S.capsules = JSON.parse(localStorage.getItem('dc_capsules') || '[]');
+    S.streak = parseInt(localStorage.getItem('dc_streak') || '0');
+    S.lastConfDate = localStorage.getItem('dc_lastDate') || null;
+  } catch (e) {}
+}
+
+// ══ SOUND ══
+let audioCtx = null, ambNode = null;
+function toggleSound() {
+  const btn = document.getElementById('snd-tog'), opts = document.getElementById('snd-opts');
+  S.soundOn = !S.soundOn;
+  if (S.soundOn) { btn.textContent = '🔊'; btn.classList.add('on'); opts.style.display = 'flex'; createRain(); }
+  else { btn.textContent = '🔇'; btn.classList.remove('on'); opts.style.display = 'none'; stopAmb(); }
+}
+function initAudio() { if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+function stopAmb() { if (ambNode) { try { ambNode.stop ? ambNode.stop() : ambNode.source?.stop(); } catch {} ambNode = null; } }
+function createRain() {
+  initAudio(); stopAmb();
+  const buf = audioCtx.createBuffer(1, audioCtx.sampleRate * 2, audioCtx.sampleRate);
+  const d = buf.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+  const src = audioCtx.createBufferSource(); src.buffer = buf; src.loop = true;
+  const bp = audioCtx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 400; bp.Q.value = .5;
+  const g = audioCtx.createGain(); g.gain.value = .07;
+  src.connect(bp); bp.connect(g); g.connect(audioCtx.destination); src.start(); ambNode = src;
+}
+function createWind() {
+  initAudio(); stopAmb();
+  const osc = audioCtx.createOscillator(); osc.type = 'sawtooth'; osc.frequency.value = 80;
+  const f = audioCtx.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = 200;
+  const g = audioCtx.createGain(); g.gain.value = .04;
+  osc.connect(f); f.connect(g); g.connect(audioCtx.destination); osc.start(); ambNode = osc;
+}
+function createPiano() {
+  initAudio(); stopAmb();
+  const notes = [261.63, 293.66, 329.63, 349.23, 392.00];
+  let i = 0;
+  function playNote() {
+    const osc = audioCtx.createOscillator(); osc.type = 'sine'; osc.frequency.value = notes[i % notes.length]; i++;
+    const g = audioCtx.createGain(); g.gain.setValueAtTime(.15, audioCtx.currentTime); g.gain.exponentialRampToValueAtTime(.001, audioCtx.currentTime + 1.5);
+    osc.connect(g); g.connect(audioCtx.destination); osc.start(); osc.stop(audioCtx.currentTime + 1.5);
+    ambNode = { stop: () => {} };
+    setTimeout(playNote, 1800 + Math.random() * 1200);
+  }
+  playNote();
+}
+function setAmb(t) {
+  if (t === 'rain') createRain();
+  else if (t === 'wind') createWind();
+  else if (t === 'piano') createPiano();
+  else stopAmb();
+  const lbl = { rain: '🌧️ বৃষ্টির শব্দ', wind: '🍃 বাতাসের শব্দ', piano: '🎹 পিয়ানোর সুর', off: '🔕 নীরব' };
+  showToast(lbl[t] || '');
+}
+
+// ══ MIDNIGHT ══
+function toggleMidnight() {
+  S.midnight = !S.midnight;
+  document.documentElement.style.setProperty('--bg', S.midnight ? '#050303' : '#0D0D0D');
+  document.documentElement.style.setProperty('--bg2', S.midnight ? '#070505' : '#110d0b');
+  const btn = document.getElementById('mid-btn'); btn.textContent = S.midnight ? '☀️ সাধারণ' : '🌙 মধ্যরাত'; btn.classList.toggle('on', S.midnight);
+  showToast(S.midnight ? '🌙 মধ্যরাত মোড — আরও গাঢ়' : '☀️ সাধারণ মোড');
+}
+function checkAutoMidnight() {
+  const h = new Date().getHours(); if (h >= 22 || h < 5) setTimeout(() => { if (!S.midnight) { toggleMidnight(); showToast('🌙 মধ্যরাত — স্বয়ংক্রিয়ভাবে গাঢ় হয়েছে'); } }, 1500);
+}
+
+// ══ EXIT INTENT ══
+document.addEventListener('mouseleave', e => { if (e.clientY < 0 && !S.exitShown) { S.exitShown = true; document.getElementById('exit').classList.add('show'); } });
+function closeExit() { document.getElementById('exit').classList.remove('show'); }
+document.getElementById('exit').addEventListener('click', e => { if (e.target === document.getElementById('exit')) closeExit(); });
+document.getElementById('share-modal').addEventListener('click', e => { if (e.target === document.getElementById('share-modal')) closeShare(); });
+
+// ══ MOB MENU ══
+function toggleMobMenu() { document.getElementById('mob-menu').classList.toggle('open'); }
+
+// ══ TOAST ══
+function showToast(msg) {
+  const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+// ══ WEATHER ══
+const WEATHERS = [['⛈️', 'অনুতাপের রাত'], ['🌧️', 'বিষণ্নতার সন্ধ্যা'], ['🌙', 'রহস্যময় রজনী'], ['🌫️', 'কুয়াশার মেলা'], ['💨', 'উদাসীন বাতাস'], ['🌑', 'নিকষ কালো রাত']];
+let wi = 0;
+setInterval(() => { wi = (wi + 1) % WEATHERS.length; const [ic, t] = WEATHERS[wi]; document.getElementById('w-em').textContent = t; }, 14000);
+setInterval(() => { document.getElementById('w-rate').textContent = (38 + Math.floor(Math.random() * 35)) + '/ঘণ্টা'; }, 7000);
+setInterval(() => { document.getElementById('w-on').textContent = (170 + Math.floor(Math.random() * 110)) + ' জন'; }, 5500);
+
+// ══ SCROLL REVEAL ══
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; } });
+}, { threshold: .1 });
+
+// ══ INIT ══
+function initAll() {
+  initSession(); loadData();
+  initStars(); initRain(); initCandles();
+  setTimeout(animTag, 100);
+  S.confs = [...SAMPLES, ...S.myConfs.filter(c => c.id > 1000)];
+  setupPills('#cats', 'cat'); setupPills('#privs', 'priv'); setupPills('#burns', 'burn'); setupPills('#rmodes', 'rmode'); setupPills('#tc-when', 'tc');
+  renderWall(); renderDiary(); renderCapsules(); renderReport();
+  document.getElementById('w-streak').textContent = S.streak + ' দিন';
+  setTimeout(() => {
+    countUp(document.getElementById('s1'), 12847 + S.myConfs.length);
+    countUp(document.getElementById('s2'), 8934);
+    countUp(document.getElementById('s3'), 9821);
+    countUp(document.getElementById('s4'), 47);
+  }, 400);
+  checkAutoMidnight();
+  window.addEventListener('resize', () => {
+    const sc = document.getElementById('stars-c'); if (sc) { sc.width = window.innerWidth; sc.height = window.innerHeight; }
+    const rc = document.getElementById('rain-c'); if (rc) { rc.width = window.innerWidth; rc.height = window.innerHeight; }
+  });
+  // Touch support
+  let touchSt = 0;
+  document.addEventListener('touchstart', e => { touchSt = e.touches[0].clientY; });
+  document.addEventListener('touchend', e => { const diff = touchSt - e.changedTouches[0].clientY; });
+}
+</script>
+</body>
+</html>
