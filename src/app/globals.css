@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-maroon: #3F0E1A;
+  --color-gold: #D4AF88;
+  --color-parchment: #F8F1E3;
+  --color-ink: #1A1A1A;
+  --color-rosegold: #B76E79;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-heading: var(--font-kalpurush), serif;
+  --font-body: var(--font-noto-serif-bengali), serif;
+  --font-inter: var(--font-inter), sans-serif;
+
+  --font-hw1: var(--font-hw1), cursive;
+  --font-hw2: var(--font-hw2), cursive;
+  --font-hw3: var(--font-hw3), cursive;
+}
+
+:root {
+  --background: #F8F1E3; /* Warm Parchment */
+  --foreground: #1A1A1A; /* Soft Ink Black */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #110d0b; /* Rich night feel */
+    --foreground: #F8F1E3; /* Warm Parchment */
+  }
+}
+
+.dark {
+  --background: #110d0b; /* Rich night feel */
+  --foreground: #F8F1E3; /* Warm Parchment */
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+}
+
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+.font-inter {
+  font-family: var(--font-inter);
+}
+
+/* Subtle parchment texture background */
+.bg-parchment-texture {
+  background-color: var(--background);
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.05"/></svg>');
+}
+
+/* Gold foil effect */
+.gold-foil {
+  background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+  -webkit-background-clip: text;
+  color: transparent;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+.gold-border {
+  border-image: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c) 1;
+}
+
+/* Handwriting fonts mock setup - using standard Google cursive fonts as fallbacks for now */
+.hw-1 { font-family: 'Caveat', cursive; }
+.hw-2 { font-family: 'Dancing Script', cursive; }
+.hw-3 { font-family: 'Pacifico', cursive; }
+.hw-4 { font-family: 'Shadows Into Light', cursive; }
+.hw-5 { font-family: 'Indie Flower', cursive; }
+.hw-6 { font-family: 'Amatic SC', cursive; }
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: #D4AF88; /* Gold */
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3F0E1A; /* Maroon */
+}
